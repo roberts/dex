@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import SwampConnectButton from '@/components/features/SwampConnectButton';
 import { navLinks } from '@/lib/constants/navigation';
 import { NavigationProps } from '@/lib/types/layout';
 
@@ -34,12 +34,12 @@ export default function NavBar({ isOpen, toggleOpen }: NavigationProps) {
               {label}
             </a>
           ))}
-          <ConnectButton />
+          <SwampConnectButton />
         </div>
 
         {/* Mobile Navigation */}
         <div className="flex items-center md:hidden">
-          <ConnectButton />
+          <SwampConnectButton />
           <button
             onClick={() => toggleOpen()}
             className="ml-4"

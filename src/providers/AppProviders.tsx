@@ -7,6 +7,7 @@ import { ThemeProvider } from 'next-themes';
 import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider, lightTheme, Theme } from '@rainbow-me/rainbowkit';
 import { wagmiConfig } from '@/lib/constants/wagmiConfig';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const theme = merge(lightTheme(), {
   colors: {
@@ -38,7 +39,9 @@ export default function Providers({ children }: ProvidersProps) {
       <WagmiProvider config={wagmiConfig}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider theme={theme} showRecentTransactions={true}>
-            {children}
+            <ChakraProvider theme={theme}>
+              {children}
+            </ChakraProvider>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
