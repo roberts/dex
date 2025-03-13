@@ -21,6 +21,7 @@ module.exports = {
         danger: '#ff3b30',
         success: '#34c759',
         info: '#32ade6',
+        customDark: "rgb(31, 31, 35)",
       },
       maxWidth: {
         'header-nav': '39rem',
