@@ -1,7 +1,7 @@
 import SwampAvatar from '@/components/core/SwampAvatar';
 // import LocalTokenSupport from '@/components/core/tokenSelector/LocalTokenSupport';
-// import { useGetBalances, useSearchToken } from '@/hooks/swap';
-// import { Token } from '@/interfaces';
+import { useGetBalances, useSearchToken } from '@/hooks/swap';
+import { Token } from '@/interfaces';
 // import { useSwapStore } from '@/store/features/swap/swapStore';
 import { SearchIcon } from '@chakra-ui/icons';
 import {
@@ -18,6 +18,7 @@ import {
   ModalOverlay,
   Stack,
   Text,
+  Box,
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
@@ -29,9 +30,9 @@ type TokenSelectorProps = {
 
 const TokenSelector = ({ children, type }: TokenSelectorProps) => {
   const { onOpen, isOpen, onClose } = useDisclosure();
-  // const { tokenList, fixedTokens } = useGetBalances();
+  const { tokenList, fixedTokens } = useGetBalances();
 
-  // const { filteredTokens, search, setSearch } = useSearchToken();
+  const { filteredTokens, search, setSearch } = useSearchToken();
 
   // const handleOnClick = (token: Token): void => {
   //   // setAsset(token.address, type);
@@ -49,16 +50,21 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
       {React.cloneElement(children, {
         onClick: () => onOpen(),
       })}
-      <Modal isOpen={isOpen} onClose={onClose} isCentered={true} >
+      <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
         <ModalOverlay backdropFilter="blur(4px)" />
-        <ModalContent py={'3'} maxW={480} mx="auto" my={80}
+        <ModalContent p={'1rem'} maxW={480} mx="auto" my={80}
           mt={{ base: "10%", md: "15%" }}
           borderRadius="12" 
           border="1px solid"
+          className={'dark:bg-customDark bg-white'}
           >
           <ModalHeader>
+            <Box fontSize={'1.25rem'} className='mb-2'>
+              Select a token
+            </Box>
             <InputGroup>
               <Input
+                className="bg-transparent"
                 placeholder={"ETH, USDT..."}
                 _focus={{ border: "none", boxShadow: "none", outline: "none" }}
                 py={'6'}
@@ -78,7 +84,7 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
               />
             </InputGroup>
             <Stack direction={'row'} justifyContent={'space-around'} py={'8'}>
-              {/* {fixedTokens?.map((token: Token, index) => {
+              {fixedTokens?.map((token: Token, index) => {
                 return (
                   <Button
                     key={index}
@@ -91,7 +97,8 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
                       color: 'yellow.500',
                     }}
                     value={token.address}
-                    onClick={() => handleOnClick(token)}>
+                    // onClick={() => handleOnClick(token)}
+                    >
                     <SwampAvatar
                       size={'sm'}
                       name={token.name}
@@ -101,7 +108,7 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
                     <Text>{token.symbol}</Text>
                   </Button>
                 );
-              })} */}
+              })}
             </Stack>
             <Divider />
           </ModalHeader>
@@ -116,18 +123,19 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
                   display: 'none',
                 },
               }}>
-              {/* {(search && search != '' ? filteredTokens : tokenList)?.map(
+              {(search && search != '' ? filteredTokens : tokenList)?.map(
                 (token: Token, index) => {
                   return (
-                    <TokenEntry
-                      key={index}
-                      token={token}
-                      type={type}
-                      onClose={onClose}
-                    />
+                    <div>{token.name}</div>
+                    // <TokenEntry
+                    //   key={index}
+                    //   token={token}
+                    //   type={type}
+                    //   onClose={onClose}
+                    // />
                   );
                 }
-              )} */}
+              )}
             </Stack>
           </ModalBody>
 
