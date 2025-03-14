@@ -2,7 +2,7 @@ import SwampAvatar from '@/components/core/SwampAvatar';
 // import LocalTokenSupport from '@/components/core/tokenSelector/LocalTokenSupport';
 import { useGetBalances, useSearchToken } from '@/hooks/swap';
 import { Token } from '@/interfaces';
-// import { useSwapStore } from '@/store/features/swap/swapStore';
+import { useSwapStore } from '@/store/swap/swapStore';
 import { SearchIcon } from '@chakra-ui/icons';
 import {
   Button,
@@ -34,10 +34,14 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
 
   const { filteredTokens, search, setSearch } = useSearchToken();
 
-  // const handleOnClick = (token: Token): void => {
-  //   // setAsset(token.address, type);
-  //   onClose();
-  // };
+  const {
+    actions: { setAsset },
+  } = useSwapStore(state => state);
+
+  const handleOnClick = (token: Token): void => {
+    setAsset(token.address, type);
+    onClose();
+  };
   const onSearchChanged = async (event: any) => {
     // setSearch(event.target.value);
   };
@@ -97,7 +101,7 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
                       color: 'yellow.500',
                     }}
                     value={token.address}
-                    // onClick={() => handleOnClick(token)}
+                    onClick={() => handleOnClick(token)}
                     >
                     <SwampAvatar
                       size={'sm'}

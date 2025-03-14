@@ -14,7 +14,7 @@ interface BaseAssetState {
     setBaseAsset: (token: Token) => void;
   };
 }
-const BASE_URL = process.env.NEXT_PUBLIC_API ?? 'https://localhost:8000';
+const BASE_URL = process.env.NEXT_PUBLIC_UNISWAP_SUBGRAPH_URL ?? 'https://localhost:8000';
 
 export const useBaseAssetStore = create<BaseAssetState>()(
   devtools((set, get) => ({
@@ -22,10 +22,12 @@ export const useBaseAssetStore = create<BaseAssetState>()(
     isLoading: false,
     actions: {
       initBaseAssets: async () => {
+        console.log(process.env.NEXT_PUBLIC_UNISWAP_SUBGRAPH_URL);
         set({ isLoading: true });
         await axios
-          .get(BASE_URL.concat('/assets'))
+          .get(BASE_URL)
           .then(response => {
+            console.log(response);
             let baseAssets = response.data.data;
             baseAssets = mapToken(baseAssets);
 

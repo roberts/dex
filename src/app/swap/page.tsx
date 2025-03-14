@@ -21,16 +21,22 @@ import {
   ModalContent
 } from '@chakra-ui/react';
 import TokenSelector from '@/components/uis/TokenSelector';
+import { useSwapStore } from '@/store/swap/swapStore';
+import { shallow } from 'zustand/shallow';
 
 export default function Home() {
-  const { address, isConnected } = useAccount();
+  const { address, status, isConnected } = useAccount();
 
+  const {
+    initAssets,
+  } = useSwapStore(
+    state => ({
+      initAssets: state.actions.initAssets,
+    }),
+    shallow
+  );
   useEffect(() => {
-    if (isConnected) {
-      console.log('Wallet address: ', address);
-    } else {
-      console.log('Not connected');
-    }
+    initAssets();
   }, [address, isConnected]);
   
   const onSwapClick = () => {

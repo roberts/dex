@@ -1,6 +1,6 @@
 import { Token } from '@/interfaces';
 import { useBaseAssetStore } from '@/store/baseAssetsStore';
-import { fetchBalance } from '@wagmi/core';
+import { getBalance } from 'wagmi/actions';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 
@@ -21,7 +21,7 @@ const useGetBalances = () => {
       const getBalances = async () => {
         let localList = await Promise.all(
           baseAssets.map(async (token: Token) => {
-            return await fetchBalance({
+            return await getBalance({
               address: address!,
               token: token.address,
             })
