@@ -5,6 +5,8 @@ import axios from 'axios';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { fetchTokenData } from '@/utils/fetchData';
+
 interface BaseAssetState {
   baseAssets: Token[];
   isLoading: boolean;
@@ -24,11 +26,10 @@ export const useBaseAssetStore = create<BaseAssetState>()(
       initBaseAssets: async () => {
         console.log(process.env.NEXT_PUBLIC_UNISWAP_SUBGRAPH_URL);
         set({ isLoading: true });
-        await axios
-          .get(BASE_URL)
-          .then(response => {
-            console.log(response);
-            let baseAssets = response.data.data;
+        await fetchTokenData()
+          .then(result => {
+            let baseAssets = result?.data.tokens;
+            console.log('Fetched tokens:', result);
             baseAssets = mapToken(baseAssets);
 
             set({ baseAssets });

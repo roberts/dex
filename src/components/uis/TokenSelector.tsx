@@ -22,6 +22,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
+import TokenEntry from './TokenEntry';
 
 type TokenSelectorProps = {
   children: any;
@@ -131,13 +132,13 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
               {(search && search != '' ? filteredTokens : tokenList)?.map(
                 (token: Token, index) => {
                   return (
-                    <div key = {index}>{token.name}</div>
-                    // <TokenEntry
-                    //   key={index}
-                    //   token={token}
-                    //   type={type}
-                    //   onClose={onClose}
-                    // />
+                    // <div key = {index}>{token.name}</div>
+                    <TokenEntry
+                      key={index}
+                      token={token}
+                      type={type}
+                      onClose={onClose}
+                    />
                   );
                 }
               )}

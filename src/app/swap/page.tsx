@@ -26,6 +26,16 @@ import { shallow } from 'zustand/shallow';
 
 export default function Home() {
   const { address, status, isConnected } = useAccount();
+  const {
+    inputAsset,
+    outputAsset,
+  } = useSwapStore(
+    state => ({
+      inputAsset: state.inputAsset,
+      outputAsset: state.outputAsset,
+    }),
+    shallow
+  );
 
   const {
     initAssets,
@@ -96,15 +106,15 @@ export default function Home() {
                       justifyContent={'space-evenly'}>
                       <SwampAvatar
                         boxSize={24}
-                        name = {"ETH"}
-                        src = {""}
-                        // name={token?.name}
-                        // src={token?.logoURI!}
-                        // ml={1}
+                        // name = {"ETH"}
+                        // src = {""}
+                        name={inputAsset?.name ?? "ETH"}
+                        src={inputAsset?.logoURI!}
+                        ml={1}
                       />
                       <Text ml={1} mr={1} fontSize={'0.875rem'}>
-                        ETH
-                        {/* {token?.symbol} */}
+                        {/* ETH */}
+                        {inputAsset?.symbol ?? "ETH"}
                       </Text>
                     </Button>
                   </TokenSelector>
@@ -128,15 +138,12 @@ export default function Home() {
                     justifyContent={'space-evenly'}>
                     <SwampAvatar
                       boxSize={24}
-                      name = {"ETH"}
-                      src = {""}
-                      // name={token?.name}
-                      // src={token?.logoURI!}
-                      // ml={1}
+                      name={outputAsset?.name ?? "ETH"}
+                      src={outputAsset?.logoURI!}
+                      ml={1}
                     />
                     <Text ml={1} mr={1} fontSize={'0.875rem'} fontFamily={'Proto'}>
-                      Select Token
-                      {/* {token?.symbol} */}
+                      {outputAsset?.symbol ?? "Select Token"}
                     </Text>
                   </Button>
                 </TokenSelector>
