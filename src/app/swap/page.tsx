@@ -97,7 +97,7 @@ export default function Home() {
                       <SwampAvatar
                         boxSize={24}
                         name = {"ETH"}
-                        src = {null}
+                        src = {""}
                         // name={token?.name}
                         // src={token?.logoURI!}
                         // ml={1}
@@ -129,7 +129,7 @@ export default function Home() {
                     <SwampAvatar
                       boxSize={24}
                       name = {"ETH"}
-                      src = {null}
+                      src = {""}
                       // name={token?.name}
                       // src={token?.logoURI!}
                       // ml={1}

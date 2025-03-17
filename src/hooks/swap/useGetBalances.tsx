@@ -3,6 +3,7 @@ import { useBaseAssetStore } from '@/store/baseAssetsStore';
 import { getBalance } from 'wagmi/actions';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
+import { wagmiConfig } from '@/lib/constants/wagmiConfig';
 
 //* Returns 2 lists of tokens with their balance
 //* tokenList -> whole list
@@ -21,7 +22,7 @@ const useGetBalances = () => {
       const getBalances = async () => {
         let localList = await Promise.all(
           baseAssets.map(async (token: Token) => {
-            return await getBalance({
+            return await getBalance(wagmiConfig, {
               address: address!,
               token: token.address,
             })

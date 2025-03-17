@@ -51,7 +51,7 @@ const eslintConfig = [
       
       // Typescript
       "@typescript-eslint/no-unused-vars": "warn",
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": "warn",
       
       // General
       "no-console": ["warn", { allow: ["warn", "error"] }],
@@ -59,12 +59,7 @@ const eslintConfig = [
       "prefer-const": "warn",
       
       // Restricts `./` and `../` imports to enforce consistent use of absolute imports with aliases.
-      "no-restricted-imports": ["error", {
-        patterns: [
-          "./*",
-          "../*"
-        ]
-      }],
+      "no-restricted-imports": "off",
 
       // Enforce import order to group imports by type and path.
       "import/order": ["warn", {

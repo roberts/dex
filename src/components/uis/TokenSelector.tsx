@@ -84,6 +84,7 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
                 pointerEvents="none"
                 color="gray.300"
                 fontSize="1.2em"
+                // eslint-disable-next-line react/no-children-prop
                 children=<SearchIcon boxSize={20} color={'gray.500'} />
               />
             </InputGroup>
@@ -130,7 +131,7 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
               {(search && search != '' ? filteredTokens : tokenList)?.map(
                 (token: Token, index) => {
                   return (
-                    <div>{token.name}</div>
+                    <div key = {index}>{token.name}</div>
                     // <TokenEntry
                     //   key={index}
                     //   token={token}

@@ -7,7 +7,7 @@ import {
   } from '@chakra-ui/react';
   
   type SwampAvatarProps = AvatarProps & {
-    src: string | null;
+    src: string;
   };
   
   const SwampAvatar = ({ src, ...props }: SwampAvatarProps) => {
@@ -22,7 +22,7 @@ import {
       // />
       <Image
         {...props}
-        src={src || "/img/unknown-logo.png"}
+        src={src == "" ? "/img/unknown-logo.png" : src}
         borderRadius="full"
       />
     );
