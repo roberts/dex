@@ -109,7 +109,7 @@ export default function Home() {
                         // name = {"ETH"}
                         // src = {""}
                         name={inputAsset?.name ?? "ETH"}
-                        src={inputAsset?.logoURI!}
+                        src={inputAsset?.logoURI ?? ""}
                         ml={1}
                       />
                       <Text ml={1} mr={1} fontSize={'0.875rem'}>
@@ -139,7 +139,7 @@ export default function Home() {
                     <SwampAvatar
                       boxSize={24}
                       name={outputAsset?.name ?? "ETH"}
-                      src={outputAsset?.logoURI!}
+                      src={inputAsset?.logoURI ?? ""}
                       ml={1}
                     />
                     <Text ml={1} mr={1} fontSize={'0.875rem'} fontFamily={'Proto'}>
