@@ -20,6 +20,10 @@ import {
   export const ROUTER_ABI = routerABI;
   
   export const COIN_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+  export const COIN_DECIMALS = 18;
+  export const COIN_NAME = "ether";
+  export const COIN_SYMBOL = "ETH";
+  
 
   export const MULTICALL_ADDRESS = '0x091e99cb1C49331a94dD62755D168E941AbD0693';
   

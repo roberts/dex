@@ -16,7 +16,7 @@ interface BaseAssetState {
     setBaseAsset: (token: Token) => void;
   };
 }
-const BASE_URL = process.env.NEXT_PUBLIC_UNISWAP_SUBGRAPH_URL ?? 'https://localhost:8000';
+const BASE_URL = process.env.NEXT_PUBLIC_UNISWAP_BASE_SUBGRAPH_URL ?? 'https://localhost:8000';
 
 export const useBaseAssetStore = create<BaseAssetState>()(
   devtools((set, get) => ({
@@ -24,13 +24,28 @@ export const useBaseAssetStore = create<BaseAssetState>()(
     isLoading: false,
     actions: {
       initBaseAssets: async () => {
-        console.log(process.env.NEXT_PUBLIC_UNISWAP_SUBGRAPH_URL);
+        console.log(process.env.NEXT_PUBLIC_UNISWAP_BASE_SUBGRAPH_URL);
         set({ isLoading: true });
         await fetchTokenData()
           .then(result => {
             let baseAssets = result?.data.tokens;
-            console.log('Fetched tokens:', result);
+            // baseAssets.add(CONTRACTS.COIN_ADDRESS);
+
+            console.log('Fetched tokens:', baseAssets);
             baseAssets = mapToken(baseAssets);
+
+            baseAssets.unshift(
+              {
+                address: CONTRACTS.COIN_ADDRESS,
+                decimals: CONTRACTS.COIN_DECIMALS,
+                name: CONTRACTS.COIN_NAME,
+                symbol: CONTRACTS.COIN_SYMBOL,
+                stable: false,
+                price: 0,
+                liquidStakedAddress: "",
+                balance: 0.0,
+              }
+            );
 
             set({ baseAssets });
           })

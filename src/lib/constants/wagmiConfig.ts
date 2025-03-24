@@ -30,6 +30,11 @@ const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID || '';
  * @description Default RPC endpoints with fallbacks
  */
 const RPC_URLS = {
+  BASE: [
+    base.rpcUrls.default.http[0], // Default RPC
+    'https://base-rpc.publicnode.com', // Public Node
+    'https://base.llamarpc.com', // Llama
+  ],
   MAINNET: [
     mainnet.rpcUrls.default.http[0], // Default RPC
     'https://rpc.ankr.com/eth', // Ankr
@@ -39,11 +44,6 @@ const RPC_URLS = {
     arbitrum.rpcUrls.default.http[0], // Default RPC
     'https://rpc.ankr.com/arbitrum', // Ankr
     'https://arbitrum.llamarpc.com', // Llama
-  ],
-  BASE: [
-    base.rpcUrls.default.http[0], // Default RPC
-    'https://base-rpc.publicnode.com', // Public Node
-    'https://base.llamarpc.com', // Llama
   ],
 } as const;
 

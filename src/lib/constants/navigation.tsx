@@ -7,6 +7,10 @@ export const navLinks = [
     label: 'Website',
     href: '',
   },
+  {
+    label: 'Swap',
+    href: '/swap',
+  },
 ];
 
 // Footer social links
