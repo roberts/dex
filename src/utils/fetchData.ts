@@ -32,7 +32,7 @@ export async function fetchPairData() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ query: "{ users { id, name } }" })
+      body: ""
     })
     .then((response) => response.json())
     .then((data) => {
