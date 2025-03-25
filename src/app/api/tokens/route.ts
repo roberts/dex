@@ -3,14 +3,12 @@ import { fetchTokenData } from '@/utils/fetchData';
 import { mapToken } from '@/utils/interfaceMaps';
 import { CONTRACTS } from '@/config';
 
-interface GraphQLRequest {
-  query: string;
-  variables?: Record<string, any>;
-}
-
 export async function POST(req: Request) {
   try {
+    console.log("Mike Tokens 1:");
     const result = await fetchTokenData();
+
+    console.log("Mike :", result);
 
     let baseAssets = result?.data.tokens;
     // baseAssets.add(CONTRACTS.COIN_ADDRESS);

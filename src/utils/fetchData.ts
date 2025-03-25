@@ -17,9 +17,11 @@ export async function fetchPairData() {
   
   export async function fetchTokenData() {
     try {
+      console.log("Mike fetchTokenData 1:");
       const result = await client.query({
         query: GET_TOKENS,
       });
+      console.log("Mike fetchTokenData 2:", result);
       return result;
     } catch (error) {
       console.error('Error fetching data:', error);
