@@ -25,3 +25,21 @@ export async function fetchPairData() {
       console.error('Error fetching data:', error);
     }
   }
+
+  export async function fetchAggregatedTokenData() {
+    return fetch('/api/tokens', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: "{ users { id, name } }" })
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => { 
+      console.error('Error:', error);
+      throw error;
+    });
+  }
