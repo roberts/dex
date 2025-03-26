@@ -1,6 +1,6 @@
 import { factoryABI, routerABI } from '@/config/abis';
 import * as MAINNET from '@/config/';
-import * as TESTNET from '@/config/contractsTestnet';
+import * as TESTNET from '@/config/contracts';
 import { defineConfig, loadEnv } from '@wagmi/cli';
 import { actions, react } from '@wagmi/cli/plugins';
 

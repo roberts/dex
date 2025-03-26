@@ -1462,7 +1462,7 @@ export const routerAbi = [
 ] as const
 
 export const routerAddress =
-  '0x6fF5693b99212Da76ad316178A184AB56D299b43' as const
+  '0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24' as const
 
 export const routerConfig = { address: routerAddress, abi: routerAbi } as const
 

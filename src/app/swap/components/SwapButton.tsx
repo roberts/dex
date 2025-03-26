@@ -6,7 +6,7 @@ export default function SwapButton (props: any) {
   
   return (
     isConnected? 
-      <button onClick={props.onClick}>
+      <button onClick={props.onClick} className='w-full h-full'>
         Swap
       </button>:
       <SwampConnectButton/>

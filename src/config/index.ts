@@ -1,3 +1,3 @@
-import * as testnet from './contractsTestnet';
+import * as mainnet from './contracts';
 
-export const CONTRACTS = testnet;       // Now, it's for ethereum mainnet
+export const CONTRACTS = mainnet;       // Now, it's for ethereum mainnet

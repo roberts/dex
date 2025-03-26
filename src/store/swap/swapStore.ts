@@ -5,7 +5,7 @@ import { getBalance, getAccount } from 'wagmi/actions';
 import { mainnet } from 'wagmi/chains';  // Or another chain if needed
 import { create } from 'zustand';
 import { readPairFactory } from '@/lib/swamp';
-import { wagmiConfig } from '@/lib/constants/wagmiConfig'
+import { wagmiConfig } from '@/config/wagmiConfig'
 
 interface SwapState {
   inputAsset?: Token;

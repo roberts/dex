@@ -5,10 +5,7 @@ import { CONTRACTS } from '@/config';
 
 export async function POST(req: Request) {
   try {
-    console.log("Mike Tokens 1:");
     const result = await fetchTokenData();
-
-    console.log("Mike :", result);
 
     let baseAssets = result?.data.tokens;
     // baseAssets.add(CONTRACTS.COIN_ADDRESS);
