@@ -150,7 +150,12 @@ export const erc20Abi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const pairAbi = [
-  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  {
+    payable: false,
+    type: 'constructor',
+    inputs: [],
+    stateMutability: 'nonpayable',
+  },
   {
     type: 'event',
     anonymous: false,
@@ -168,7 +173,7 @@ export const pairAbi = [
         indexed: true,
       },
       {
-        name: 'amount',
+        name: 'value',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
@@ -201,31 +206,6 @@ export const pairAbi = [
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
     ],
     name: 'Burn',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'sender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'amount0',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'amount1',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'Fees',
   },
   {
     type: 'event',
@@ -316,7 +296,7 @@ export const pairAbi = [
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
       {
-        name: 'amount',
+        name: 'value',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
@@ -325,6 +305,8 @@ export const pairAbi = [
     name: 'Transfer',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'DOMAIN_SEPARATOR',
@@ -332,6 +314,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'MINIMUM_LIQUIDITY',
@@ -339,6 +323,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'PERMIT_TYPEHASH',
@@ -346,6 +332,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [
       { name: '', internalType: 'address', type: 'address' },
@@ -356,16 +344,20 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [
       { name: 'spender', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'approve',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'nonpayable',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [{ name: '', internalType: 'address', type: 'address' }],
     name: 'balanceOf',
@@ -373,13 +365,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
-    type: 'function',
-    inputs: [],
-    name: 'blockTimestampLast',
-    outputs: [{ name: '', internalType: 'uint32', type: 'uint32' }],
-    stateMutability: 'view',
-  },
-  {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [{ name: 'to', internalType: 'address', type: 'address' }],
     name: 'burn',
@@ -390,78 +377,8 @@ export const pairAbi = [
     stateMutability: 'nonpayable',
   },
   {
-    type: 'function',
-    inputs: [],
-    name: 'claimFees',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'recipient', internalType: 'address', type: 'address' }],
-    name: 'claimFeesFor',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'address', type: 'address' }],
-    name: 'claimable0',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'address', type: 'address' }],
-    name: 'claimable1',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      {
-        name: 'priceCumulativeStart',
-        internalType: 'uint256',
-        type: 'uint256',
-      },
-      { name: 'priceCumulativeEnd', internalType: 'uint256', type: 'uint256' },
-      { name: 'timeElapsed', internalType: 'uint256', type: 'uint256' },
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'computeAmountOut',
-    outputs: [{ name: 'amountOut', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'pure',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenIn', internalType: 'address', type: 'address' },
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'current',
-    outputs: [{ name: 'amountOut', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'currentBlockTimestamp',
-    outputs: [{ name: '', internalType: 'uint32', type: 'uint32' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'currentCumulativePrices',
-    outputs: [
-      { name: 'price0Cumulative', internalType: 'uint256', type: 'uint256' },
-      { name: 'price1Cumulative', internalType: 'uint256', type: 'uint256' },
-      { name: 'blockTimestamp', internalType: 'uint32', type: 'uint32' },
-    ],
-    stateMutability: 'view',
-  },
-  {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'decimals',
@@ -469,23 +386,17 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
-    name: 'fees',
+    name: 'factory',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
   },
   {
-    type: 'function',
-    inputs: [
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-      { name: 'tokenIn', internalType: 'address', type: 'address' },
-    ],
-    name: 'getAmountOut',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'getReserves',
@@ -497,46 +408,29 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: false,
+    payable: false,
     type: 'function',
-    inputs: [],
-    name: 'index0',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'index1',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'lastObservation',
-    outputs: [
-      {
-        name: '',
-        internalType: 'struct BaseV1Pair.Observation',
-        type: 'tuple',
-        components: [
-          { name: 'timestamp', internalType: 'uint32', type: 'uint32' },
-          {
-            name: 'price0Cumulative',
-            internalType: 'uint256',
-            type: 'uint256',
-          },
-          {
-            name: 'price1Cumulative',
-            internalType: 'uint256',
-            type: 'uint256',
-          },
-        ],
-      },
+    inputs: [
+      { name: '_token0', internalType: 'address', type: 'address' },
+      { name: '_token1', internalType: 'address', type: 'address' },
     ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    constant: true,
+    payable: false,
+    type: 'function',
+    inputs: [],
+    name: 'kLast',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
   },
   {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [{ name: 'to', internalType: 'address', type: 'address' }],
     name: 'mint',
@@ -544,6 +438,8 @@ export const pairAbi = [
     stateMutability: 'nonpayable',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'name',
@@ -551,6 +447,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [{ name: '', internalType: 'address', type: 'address' }],
     name: 'nonces',
@@ -558,31 +456,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
-    type: 'function',
-    inputs: [],
-    name: 'observationLength',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'observations',
-    outputs: [
-      { name: 'timestamp', internalType: 'uint32', type: 'uint32' },
-      { name: 'price0Cumulative', internalType: 'uint256', type: 'uint256' },
-      { name: 'price1Cumulative', internalType: 'uint256', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'periodSize',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [
       { name: 'owner', internalType: 'address', type: 'address' },
@@ -598,6 +473,8 @@ export const pairAbi = [
     stateMutability: 'nonpayable',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'price0CumulativeLast',
@@ -605,6 +482,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'price1CumulativeLast',
@@ -612,68 +491,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
-    type: 'function',
-    inputs: [
-      { name: 'tokenIn', internalType: 'address', type: 'address' },
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-      { name: 'points', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'prices',
-    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenIn', internalType: 'address', type: 'address' },
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-      { name: 'granularity', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'quote',
-    outputs: [{ name: 'amountOut', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'reserve0',
-    outputs: [{ name: '', internalType: 'uint112', type: 'uint112' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'reserve0Last',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'reserve1',
-    outputs: [{ name: '', internalType: 'uint112', type: 'uint112' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'reserve1Last',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenIn', internalType: 'address', type: 'address' },
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-      { name: 'points', internalType: 'uint256', type: 'uint256' },
-      { name: 'window', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'sample',
-    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
-    stateMutability: 'view',
-  },
-  {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [{ name: 'to', internalType: 'address', type: 'address' }],
     name: 'skim',
@@ -681,27 +500,8 @@ export const pairAbi = [
     stateMutability: 'nonpayable',
   },
   {
-    type: 'function',
-    inputs: [],
-    name: 'stable',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'address', type: 'address' }],
-    name: 'supplyIndex0',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'address', type: 'address' }],
-    name: 'supplyIndex1',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [
       { name: 'amount0Out', internalType: 'uint256', type: 'uint256' },
@@ -714,6 +514,8 @@ export const pairAbi = [
     stateMutability: 'nonpayable',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'symbol',
@@ -721,6 +523,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'sync',
@@ -728,6 +532,8 @@ export const pairAbi = [
     stateMutability: 'nonpayable',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'token0',
@@ -735,6 +541,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'token1',
@@ -742,6 +550,8 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: true,
+    payable: false,
     type: 'function',
     inputs: [],
     name: 'totalSupply',
@@ -749,239 +559,31 @@ export const pairAbi = [
     stateMutability: 'view',
   },
   {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [
-      { name: 'dst', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'transfer',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'nonpayable',
   },
   {
+    constant: false,
+    payable: false,
     type: 'function',
     inputs: [
-      { name: 'src', internalType: 'address', type: 'address' },
-      { name: 'dst', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'transferFrom',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'nonpayable',
   },
 ] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// PairFactory
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const pairFactoryAbi = [
-  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'token0',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'token1',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      { name: 'stable', internalType: 'bool', type: 'bool', indexed: false },
-      {
-        name: 'pair',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-      { name: '', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'PairCreated',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'MAX_FEE',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'acceptFeeManager',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'acceptPauser',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'allPairs',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'allPairsLength',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenA', internalType: 'address', type: 'address' },
-      { name: 'tokenB', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'createPair',
-    outputs: [{ name: 'pair', internalType: 'address', type: 'address' }],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'feeManager',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_stable', internalType: 'bool', type: 'bool' }],
-    name: 'getFee',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'getInitializable',
-    outputs: [
-      { name: '', internalType: 'address', type: 'address' },
-      { name: '', internalType: 'address', type: 'address' },
-      { name: '', internalType: 'bool', type: 'bool' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '', internalType: 'address', type: 'address' },
-      { name: '', internalType: 'address', type: 'address' },
-      { name: '', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'getPair',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'address', type: 'address' }],
-    name: 'isPair',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'isPaused',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'pairCodeHash',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-    stateMutability: 'pure',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'pauser',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'pendingFeeManager',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'pendingPauser',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '_stable', internalType: 'bool', type: 'bool' },
-      { name: '_fee', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'setFee',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_feeManager', internalType: 'address', type: 'address' }],
-    name: 'setFeeManager',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_state', internalType: 'bool', type: 'bool' }],
-    name: 'setPause',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_pauser', internalType: 'address', type: 'address' }],
-    name: 'setPauser',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'stableFee',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'volatileFee',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-] as const
-
-export const pairFactoryAddress =
-  '0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6' as const
-
-export const pairFactoryConfig = {
-  address: pairFactoryAddress,
-  abi: pairFactoryAbi,
-} as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Router
@@ -992,37 +594,22 @@ export const routerAbi = [
     type: 'constructor',
     inputs: [
       { name: '_factory', internalType: 'address', type: 'address' },
-      { name: '_weth', internalType: 'address', type: 'address' },
+      { name: '_WETH', internalType: 'address', type: 'address' },
     ],
     stateMutability: 'nonpayable',
   },
   {
     type: 'function',
-    inputs: [
-      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
-      {
-        name: 'routes',
-        internalType: 'struct Router.route[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'from', internalType: 'address', type: 'address' },
-          { name: 'to', internalType: 'address', type: 'address' },
-          { name: 'stable', internalType: 'bool', type: 'bool' },
-        ],
-      },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'deadline', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'UNSAFE_swapExactTokensForTokens',
-    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
-    stateMutability: 'nonpayable',
+    inputs: [],
+    name: 'WETH',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
     inputs: [
       { name: 'tokenA', internalType: 'address', type: 'address' },
       { name: 'tokenB', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
       { name: 'amountADesired', internalType: 'uint256', type: 'uint256' },
       { name: 'amountBDesired', internalType: 'uint256', type: 'uint256' },
       { name: 'amountAMin', internalType: 'uint256', type: 'uint256' },
@@ -1042,7 +629,6 @@ export const routerAbi = [
     type: 'function',
     inputs: [
       { name: 'token', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
       { name: 'amountTokenDesired', internalType: 'uint256', type: 'uint256' },
       { name: 'amountTokenMin', internalType: 'uint256', type: 'uint256' },
       { name: 'amountETHMin', internalType: 'uint256', type: 'uint256' },
@@ -1067,14 +653,34 @@ export const routerAbi = [
   {
     type: 'function',
     inputs: [
+      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
+      { name: 'reserveIn', internalType: 'uint256', type: 'uint256' },
+      { name: 'reserveOut', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'getAmountIn',
+    outputs: [{ name: 'amountIn', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [
       { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-      { name: 'tokenIn', internalType: 'address', type: 'address' },
-      { name: 'tokenOut', internalType: 'address', type: 'address' },
+      { name: 'reserveIn', internalType: 'uint256', type: 'uint256' },
+      { name: 'reserveOut', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'getAmountOut',
+    outputs: [{ name: 'amountOut', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
+    ],
+    name: 'getAmountsIn',
     outputs: [
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
+      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
     ],
     stateMutability: 'view',
   },
@@ -1082,16 +688,7 @@ export const routerAbi = [
     type: 'function',
     inputs: [
       { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-      {
-        name: 'routes',
-        internalType: 'struct Router.route[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'from', internalType: 'address', type: 'address' },
-          { name: 'to', internalType: 'address', type: 'address' },
-          { name: 'stable', internalType: 'bool', type: 'bool' },
-        ],
-      },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
     ],
     name: 'getAmountsOut',
     outputs: [
@@ -1102,73 +699,19 @@ export const routerAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'tokenA', internalType: 'address', type: 'address' },
-      { name: 'tokenB', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'getReserves',
-    outputs: [
+      { name: 'amountA', internalType: 'uint256', type: 'uint256' },
       { name: 'reserveA', internalType: 'uint256', type: 'uint256' },
       { name: 'reserveB', internalType: 'uint256', type: 'uint256' },
     ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'pair', internalType: 'address', type: 'address' }],
-    name: 'isPair',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
+    name: 'quote',
+    outputs: [{ name: 'amountB', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'pure',
   },
   {
     type: 'function',
     inputs: [
       { name: 'tokenA', internalType: 'address', type: 'address' },
       { name: 'tokenB', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'pairFor',
-    outputs: [{ name: 'pair', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenA', internalType: 'address', type: 'address' },
-      { name: 'tokenB', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
-      { name: 'amountADesired', internalType: 'uint256', type: 'uint256' },
-      { name: 'amountBDesired', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'quoteAddLiquidity',
-    outputs: [
-      { name: 'amountA', internalType: 'uint256', type: 'uint256' },
-      { name: 'amountB', internalType: 'uint256', type: 'uint256' },
-      { name: 'liquidity', internalType: 'uint256', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenA', internalType: 'address', type: 'address' },
-      { name: 'tokenB', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
-      { name: 'liquidity', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'quoteRemoveLiquidity',
-    outputs: [
-      { name: 'amountA', internalType: 'uint256', type: 'uint256' },
-      { name: 'amountB', internalType: 'uint256', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'tokenA', internalType: 'address', type: 'address' },
-      { name: 'tokenB', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
       { name: 'liquidity', internalType: 'uint256', type: 'uint256' },
       { name: 'amountAMin', internalType: 'uint256', type: 'uint256' },
       { name: 'amountBMin', internalType: 'uint256', type: 'uint256' },
@@ -1186,7 +729,6 @@ export const routerAbi = [
     type: 'function',
     inputs: [
       { name: 'token', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
       { name: 'liquidity', internalType: 'uint256', type: 'uint256' },
       { name: 'amountTokenMin', internalType: 'uint256', type: 'uint256' },
       { name: 'amountETHMin', internalType: 'uint256', type: 'uint256' },
@@ -1204,7 +746,6 @@ export const routerAbi = [
     type: 'function',
     inputs: [
       { name: 'token', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
       { name: 'liquidity', internalType: 'uint256', type: 'uint256' },
       { name: 'amountTokenMin', internalType: 'uint256', type: 'uint256' },
       { name: 'amountETHMin', internalType: 'uint256', type: 'uint256' },
@@ -1212,17 +753,13 @@ export const routerAbi = [
       { name: 'deadline', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'removeLiquidityETHSupportingFeeOnTransferTokens',
-    outputs: [
-      { name: 'amountToken', internalType: 'uint256', type: 'uint256' },
-      { name: 'amountETH', internalType: 'uint256', type: 'uint256' },
-    ],
+    outputs: [{ name: 'amountETH', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [
       { name: 'token', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
       { name: 'liquidity', internalType: 'uint256', type: 'uint256' },
       { name: 'amountTokenMin', internalType: 'uint256', type: 'uint256' },
       { name: 'amountETHMin', internalType: 'uint256', type: 'uint256' },
@@ -1244,7 +781,6 @@ export const routerAbi = [
     type: 'function',
     inputs: [
       { name: 'token', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
       { name: 'liquidity', internalType: 'uint256', type: 'uint256' },
       { name: 'amountTokenMin', internalType: 'uint256', type: 'uint256' },
       { name: 'amountETHMin', internalType: 'uint256', type: 'uint256' },
@@ -1256,10 +792,7 @@ export const routerAbi = [
       { name: 's', internalType: 'bytes32', type: 'bytes32' },
     ],
     name: 'removeLiquidityETHWithPermitSupportingFeeOnTransferTokens',
-    outputs: [
-      { name: 'amountToken', internalType: 'uint256', type: 'uint256' },
-      { name: 'amountETH', internalType: 'uint256', type: 'uint256' },
-    ],
+    outputs: [{ name: 'amountETH', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'nonpayable',
   },
   {
@@ -1267,7 +800,6 @@ export const routerAbi = [
     inputs: [
       { name: 'tokenA', internalType: 'address', type: 'address' },
       { name: 'tokenB', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
       { name: 'liquidity', internalType: 'uint256', type: 'uint256' },
       { name: 'amountAMin', internalType: 'uint256', type: 'uint256' },
       { name: 'amountBMin', internalType: 'uint256', type: 'uint256' },
@@ -1288,30 +820,22 @@ export const routerAbi = [
   {
     type: 'function',
     inputs: [
-      { name: 'tokenA', internalType: 'address', type: 'address' },
-      { name: 'tokenB', internalType: 'address', type: 'address' },
+      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'deadline', internalType: 'uint256', type: 'uint256' },
     ],
-    name: 'sortTokens',
+    name: 'swapETHForExactTokens',
     outputs: [
-      { name: 'token0', internalType: 'address', type: 'address' },
-      { name: 'token1', internalType: 'address', type: 'address' },
+      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'payable',
   },
   {
     type: 'function',
     inputs: [
       { name: 'amountOutMin', internalType: 'uint256', type: 'uint256' },
-      {
-        name: 'routes',
-        internalType: 'struct Router.route[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'from', internalType: 'address', type: 'address' },
-          { name: 'to', internalType: 'address', type: 'address' },
-          { name: 'stable', internalType: 'bool', type: 'bool' },
-        ],
-      },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'deadline', internalType: 'uint256', type: 'uint256' },
     ],
@@ -1325,16 +849,7 @@ export const routerAbi = [
     type: 'function',
     inputs: [
       { name: 'amountOutMin', internalType: 'uint256', type: 'uint256' },
-      {
-        name: 'routes',
-        internalType: 'struct Router.route[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'from', internalType: 'address', type: 'address' },
-          { name: 'to', internalType: 'address', type: 'address' },
-          { name: 'stable', internalType: 'bool', type: 'bool' },
-        ],
-      },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'deadline', internalType: 'uint256', type: 'uint256' },
     ],
@@ -1347,16 +862,7 @@ export const routerAbi = [
     inputs: [
       { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
       { name: 'amountOutMin', internalType: 'uint256', type: 'uint256' },
-      {
-        name: 'routes',
-        internalType: 'struct Router.route[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'from', internalType: 'address', type: 'address' },
-          { name: 'to', internalType: 'address', type: 'address' },
-          { name: 'stable', internalType: 'bool', type: 'bool' },
-        ],
-      },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'deadline', internalType: 'uint256', type: 'uint256' },
     ],
@@ -1371,16 +877,7 @@ export const routerAbi = [
     inputs: [
       { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
       { name: 'amountOutMin', internalType: 'uint256', type: 'uint256' },
-      {
-        name: 'routes',
-        internalType: 'struct Router.route[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'from', internalType: 'address', type: 'address' },
-          { name: 'to', internalType: 'address', type: 'address' },
-          { name: 'stable', internalType: 'bool', type: 'bool' },
-        ],
-      },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'deadline', internalType: 'uint256', type: 'uint256' },
     ],
@@ -1393,16 +890,7 @@ export const routerAbi = [
     inputs: [
       { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
       { name: 'amountOutMin', internalType: 'uint256', type: 'uint256' },
-      {
-        name: 'routes',
-        internalType: 'struct Router.route[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'from', internalType: 'address', type: 'address' },
-          { name: 'to', internalType: 'address', type: 'address' },
-          { name: 'stable', internalType: 'bool', type: 'bool' },
-        ],
-      },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'deadline', internalType: 'uint256', type: 'uint256' },
     ],
@@ -1417,33 +905,7 @@ export const routerAbi = [
     inputs: [
       { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
       { name: 'amountOutMin', internalType: 'uint256', type: 'uint256' },
-      { name: 'tokenFrom', internalType: 'address', type: 'address' },
-      { name: 'tokenTo', internalType: 'address', type: 'address' },
-      { name: 'stable', internalType: 'bool', type: 'bool' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'deadline', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'swapExactTokensForTokensSimple',
-    outputs: [
-      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
-    ],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-      { name: 'amountOutMin', internalType: 'uint256', type: 'uint256' },
-      {
-        name: 'routes',
-        internalType: 'struct Router.route[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'from', internalType: 'address', type: 'address' },
-          { name: 'to', internalType: 'address', type: 'address' },
-          { name: 'stable', internalType: 'bool', type: 'bool' },
-        ],
-      },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
       { name: 'to', internalType: 'address', type: 'address' },
       { name: 'deadline', internalType: 'uint256', type: 'uint256' },
     ],
@@ -1453,10 +915,33 @@ export const routerAbi = [
   },
   {
     type: 'function',
-    inputs: [],
-    name: 'weth',
-    outputs: [{ name: '', internalType: 'contract IWETH', type: 'address' }],
-    stateMutability: 'view',
+    inputs: [
+      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
+      { name: 'amountInMax', internalType: 'uint256', type: 'uint256' },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'deadline', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'swapTokensForExactETH',
+    outputs: [
+      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
+      { name: 'amountInMax', internalType: 'uint256', type: 'uint256' },
+      { name: 'path', internalType: 'address[]', type: 'address[]' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'deadline', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'swapTokensForExactTokens',
+    outputs: [
+      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+    stateMutability: 'nonpayable',
   },
   { type: 'receive', stateMutability: 'payable' },
 ] as const
@@ -1465,6 +950,135 @@ export const routerAddress =
   '0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24' as const
 
 export const routerConfig = { address: routerAddress, abi: routerAbi } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// UniFactory
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const uniFactoryAbi = [
+  {
+    payable: false,
+    type: 'constructor',
+    inputs: [
+      { name: '_feeToSetter', internalType: 'address', type: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'token0',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'token1',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'pair',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      { name: '', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'PairCreated',
+  },
+  {
+    constant: true,
+    payable: false,
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'allPairs',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    constant: true,
+    payable: false,
+    type: 'function',
+    inputs: [],
+    name: 'allPairsLength',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    constant: false,
+    payable: false,
+    type: 'function',
+    inputs: [
+      { name: 'tokenA', internalType: 'address', type: 'address' },
+      { name: 'tokenB', internalType: 'address', type: 'address' },
+    ],
+    name: 'createPair',
+    outputs: [{ name: 'pair', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    constant: true,
+    payable: false,
+    type: 'function',
+    inputs: [],
+    name: 'feeTo',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    constant: true,
+    payable: false,
+    type: 'function',
+    inputs: [],
+    name: 'feeToSetter',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    constant: true,
+    payable: false,
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'address', type: 'address' },
+    ],
+    name: 'getPair',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    constant: false,
+    payable: false,
+    type: 'function',
+    inputs: [{ name: '_feeTo', internalType: 'address', type: 'address' }],
+    name: 'setFeeTo',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    constant: false,
+    payable: false,
+    type: 'function',
+    inputs: [
+      { name: '_feeToSetter', internalType: 'address', type: 'address' },
+    ],
+    name: 'setFeeToSetter',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+export const uniFactoryAddress =
+  '0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6' as const
+
+export const uniFactoryConfig = {
+  address: uniFactoryAddress,
+  abi: uniFactoryAbi,
+} as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Action
@@ -1667,61 +1281,6 @@ export const readPairBalanceOf = /*#__PURE__*/ createReadContract({
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"blockTimestampLast"`
- */
-export const readPairBlockTimestampLast = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'blockTimestampLast',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimable0"`
- */
-export const readPairClaimable0 = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'claimable0',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimable1"`
- */
-export const readPairClaimable1 = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'claimable1',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"computeAmountOut"`
- */
-export const readPairComputeAmountOut = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'computeAmountOut',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"current"`
- */
-export const readPairCurrent = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'current',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"currentBlockTimestamp"`
- */
-export const readPairCurrentBlockTimestamp = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'currentBlockTimestamp',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"currentCumulativePrices"`
- */
-export const readPairCurrentCumulativePrices = /*#__PURE__*/ createReadContract(
-  { abi: pairAbi, functionName: 'currentCumulativePrices' },
-)
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"decimals"`
  */
 export const readPairDecimals = /*#__PURE__*/ createReadContract({
@@ -1730,20 +1289,8 @@ export const readPairDecimals = /*#__PURE__*/ createReadContract({
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"fees"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"factory"`
  */
-export const readPairFees = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'fees',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"getAmountOut"`
- */
-export const readPairGetAmountOut = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'getAmountOut',
-})
 
 /**
  * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"getReserves"`
@@ -1754,27 +1301,11 @@ export const readPairGetReserves = /*#__PURE__*/ createReadContract({
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"index0"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"kLast"`
  */
-export const readPairIndex0 = /*#__PURE__*/ createReadContract({
+export const readPairKLast = /*#__PURE__*/ createReadContract({
   abi: pairAbi,
-  functionName: 'index0',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"index1"`
- */
-export const readPairIndex1 = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'index1',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"lastObservation"`
- */
-export const readPairLastObservation = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'lastObservation',
+  functionName: 'kLast',
 })
 
 /**
@@ -1794,30 +1325,6 @@ export const readPairNonces = /*#__PURE__*/ createReadContract({
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"observationLength"`
- */
-export const readPairObservationLength = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'observationLength',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"observations"`
- */
-export const readPairObservations = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'observations',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"periodSize"`
- */
-export const readPairPeriodSize = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'periodSize',
-})
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"price0CumulativeLast"`
  */
 export const readPairPrice0CumulativeLast = /*#__PURE__*/ createReadContract({
@@ -1831,86 +1338,6 @@ export const readPairPrice0CumulativeLast = /*#__PURE__*/ createReadContract({
 export const readPairPrice1CumulativeLast = /*#__PURE__*/ createReadContract({
   abi: pairAbi,
   functionName: 'price1CumulativeLast',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"prices"`
- */
-export const readPairPrices = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'prices',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"quote"`
- */
-export const readPairQuote = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'quote',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"reserve0"`
- */
-export const readPairReserve0 = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'reserve0',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"reserve0Last"`
- */
-export const readPairReserve0Last = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'reserve0Last',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"reserve1"`
- */
-export const readPairReserve1 = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'reserve1',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"reserve1Last"`
- */
-export const readPairReserve1Last = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'reserve1Last',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"sample"`
- */
-export const readPairSample = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'sample',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"stable"`
- */
-export const readPairStable = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'stable',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"supplyIndex0"`
- */
-export const readPairSupplyIndex0 = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'supplyIndex0',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"supplyIndex1"`
- */
-export const readPairSupplyIndex1 = /*#__PURE__*/ createReadContract({
-  abi: pairAbi,
-  functionName: 'supplyIndex1',
 })
 
 /**
@@ -1967,19 +1394,11 @@ export const writePairBurn = /*#__PURE__*/ createWriteContract({
 })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimFees"`
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"initialize"`
  */
-export const writePairClaimFees = /*#__PURE__*/ createWriteContract({
+export const writePairInitialize = /*#__PURE__*/ createWriteContract({
   abi: pairAbi,
-  functionName: 'claimFees',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimFeesFor"`
- */
-export const writePairClaimFeesFor = /*#__PURE__*/ createWriteContract({
-  abi: pairAbi,
-  functionName: 'claimFeesFor',
+  functionName: 'initialize',
 })
 
 /**
@@ -2062,19 +1481,11 @@ export const simulatePairBurn = /*#__PURE__*/ createSimulateContract({
 })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimFees"`
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"initialize"`
  */
-export const simulatePairClaimFees = /*#__PURE__*/ createSimulateContract({
+export const simulatePairInitialize = /*#__PURE__*/ createSimulateContract({
   abi: pairAbi,
-  functionName: 'claimFees',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimFeesFor"`
- */
-export const simulatePairClaimFeesFor = /*#__PURE__*/ createSimulateContract({
-  abi: pairAbi,
-  functionName: 'claimFeesFor',
+  functionName: 'initialize',
 })
 
 /**
@@ -2157,14 +1568,6 @@ export const watchPairBurnEvent = /*#__PURE__*/ createWatchContractEvent({
 })
 
 /**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link pairAbi}__ and `eventName` set to `"Fees"`
- */
-export const watchPairFeesEvent = /*#__PURE__*/ createWatchContractEvent({
-  abi: pairAbi,
-  eventName: 'Fees',
-})
-
-/**
  * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link pairAbi}__ and `eventName` set to `"Mint"`
  */
 export const watchPairMintEvent = /*#__PURE__*/ createWatchContractEvent({
@@ -2197,325 +1600,20 @@ export const watchPairTransferEvent = /*#__PURE__*/ createWatchContractEvent({
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__
- */
-export const readPairFactory = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"MAX_FEE"`
- */
-export const readPairFactoryMaxFee = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'MAX_FEE',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"allPairs"`
- */
-export const readPairFactoryAllPairs = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'allPairs',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"allPairsLength"`
- */
-export const readPairFactoryAllPairsLength = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'allPairsLength',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"feeManager"`
- */
-export const readPairFactoryFeeManager = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'feeManager',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"getFee"`
- */
-export const readPairFactoryGetFee = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'getFee',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"getInitializable"`
- */
-export const readPairFactoryGetInitializable = /*#__PURE__*/ createReadContract(
-  {
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'getInitializable',
-  },
-)
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"getPair"`
- */
-export const readPairFactoryGetPair = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'getPair',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"isPair"`
- */
-export const readPairFactoryIsPair = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'isPair',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"isPaused"`
- */
-export const readPairFactoryIsPaused = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'isPaused',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"pairCodeHash"`
- */
-export const readPairFactoryPairCodeHash = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'pairCodeHash',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"pauser"`
- */
-export const readPairFactoryPauser = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'pauser',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"pendingFeeManager"`
- */
-export const readPairFactoryPendingFeeManager =
-  /*#__PURE__*/ createReadContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'pendingFeeManager',
-  })
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"pendingPauser"`
- */
-export const readPairFactoryPendingPauser = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'pendingPauser',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"stableFee"`
- */
-export const readPairFactoryStableFee = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'stableFee',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"volatileFee"`
- */
-export const readPairFactoryVolatileFee = /*#__PURE__*/ createReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'volatileFee',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairFactoryAbi}__
- */
-export const writePairFactory = /*#__PURE__*/ createWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"acceptFeeManager"`
- */
-export const writePairFactoryAcceptFeeManager =
-  /*#__PURE__*/ createWriteContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'acceptFeeManager',
-  })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"acceptPauser"`
- */
-export const writePairFactoryAcceptPauser = /*#__PURE__*/ createWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'acceptPauser',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"createPair"`
- */
-export const writePairFactoryCreatePair = /*#__PURE__*/ createWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'createPair',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setFee"`
- */
-export const writePairFactorySetFee = /*#__PURE__*/ createWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'setFee',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setFeeManager"`
- */
-export const writePairFactorySetFeeManager = /*#__PURE__*/ createWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'setFeeManager',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setPause"`
- */
-export const writePairFactorySetPause = /*#__PURE__*/ createWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'setPause',
-})
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setPauser"`
- */
-export const writePairFactorySetPauser = /*#__PURE__*/ createWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'setPauser',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairFactoryAbi}__
- */
-export const simulatePairFactory = /*#__PURE__*/ createSimulateContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"acceptFeeManager"`
- */
-export const simulatePairFactoryAcceptFeeManager =
-  /*#__PURE__*/ createSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'acceptFeeManager',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"acceptPauser"`
- */
-export const simulatePairFactoryAcceptPauser =
-  /*#__PURE__*/ createSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'acceptPauser',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"createPair"`
- */
-export const simulatePairFactoryCreatePair =
-  /*#__PURE__*/ createSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'createPair',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setFee"`
- */
-export const simulatePairFactorySetFee = /*#__PURE__*/ createSimulateContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'setFee',
-})
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setFeeManager"`
- */
-export const simulatePairFactorySetFeeManager =
-  /*#__PURE__*/ createSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setFeeManager',
-  })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setPause"`
- */
-export const simulatePairFactorySetPause = /*#__PURE__*/ createSimulateContract(
-  {
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setPause',
-  },
-)
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setPauser"`
- */
-export const simulatePairFactorySetPauser =
-  /*#__PURE__*/ createSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setPauser',
-  })
-
-/**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link pairFactoryAbi}__
- */
-export const watchPairFactoryEvent = /*#__PURE__*/ createWatchContractEvent({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-})
-
-/**
- * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link pairFactoryAbi}__ and `eventName` set to `"PairCreated"`
- */
-export const watchPairFactoryPairCreatedEvent =
-  /*#__PURE__*/ createWatchContractEvent({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    eventName: 'PairCreated',
-  })
-
-/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__
  */
 export const readRouter = /*#__PURE__*/ createReadContract({
   abi: routerAbi,
   address: routerAddress,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"WETH"`
+ */
+export const readRouterWeth = /*#__PURE__*/ createReadContract({
+  abi: routerAbi,
+  address: routerAddress,
+  functionName: 'WETH',
 })
 
 /**
@@ -2528,12 +1626,30 @@ export const readRouterFactory = /*#__PURE__*/ createReadContract({
 })
 
 /**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"getAmountIn"`
+ */
+export const readRouterGetAmountIn = /*#__PURE__*/ createReadContract({
+  abi: routerAbi,
+  address: routerAddress,
+  functionName: 'getAmountIn',
+})
+
+/**
  * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"getAmountOut"`
  */
 export const readRouterGetAmountOut = /*#__PURE__*/ createReadContract({
   abi: routerAbi,
   address: routerAddress,
   functionName: 'getAmountOut',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"getAmountsIn"`
+ */
+export const readRouterGetAmountsIn = /*#__PURE__*/ createReadContract({
+  abi: routerAbi,
+  address: routerAddress,
+  functionName: 'getAmountsIn',
 })
 
 /**
@@ -2546,66 +1662,12 @@ export const readRouterGetAmountsOut = /*#__PURE__*/ createReadContract({
 })
 
 /**
- * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"getReserves"`
+ * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"quote"`
  */
-export const readRouterGetReserves = /*#__PURE__*/ createReadContract({
+export const readRouterQuote = /*#__PURE__*/ createReadContract({
   abi: routerAbi,
   address: routerAddress,
-  functionName: 'getReserves',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"isPair"`
- */
-export const readRouterIsPair = /*#__PURE__*/ createReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'isPair',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"pairFor"`
- */
-export const readRouterPairFor = /*#__PURE__*/ createReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'pairFor',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"quoteAddLiquidity"`
- */
-export const readRouterQuoteAddLiquidity = /*#__PURE__*/ createReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'quoteAddLiquidity',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"quoteRemoveLiquidity"`
- */
-export const readRouterQuoteRemoveLiquidity = /*#__PURE__*/ createReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'quoteRemoveLiquidity',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"sortTokens"`
- */
-export const readRouterSortTokens = /*#__PURE__*/ createReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'sortTokens',
-})
-
-/**
- * Wraps __{@link readContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"weth"`
- */
-export const readRouterWeth = /*#__PURE__*/ createReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'weth',
+  functionName: 'quote',
 })
 
 /**
@@ -2615,16 +1677,6 @@ export const writeRouter = /*#__PURE__*/ createWriteContract({
   abi: routerAbi,
   address: routerAddress,
 })
-
-/**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"UNSAFE_swapExactTokensForTokens"`
- */
-export const writeRouterUnsafeSwapExactTokensForTokens =
-  /*#__PURE__*/ createWriteContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'UNSAFE_swapExactTokensForTokens',
-  })
 
 /**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"addLiquidity"`
@@ -2703,6 +1755,16 @@ export const writeRouterRemoveLiquidityWithPermit =
   })
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapETHForExactTokens"`
+ */
+export const writeRouterSwapEthForExactTokens =
+  /*#__PURE__*/ createWriteContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapETHForExactTokens',
+  })
+
+/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactETHForTokens"`
  */
 export const writeRouterSwapExactEthForTokens =
@@ -2753,16 +1815,6 @@ export const writeRouterSwapExactTokensForTokens =
   })
 
 /**
- * Wraps __{@link writeContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactTokensForTokensSimple"`
- */
-export const writeRouterSwapExactTokensForTokensSimple =
-  /*#__PURE__*/ createWriteContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'swapExactTokensForTokensSimple',
-  })
-
-/**
  * Wraps __{@link writeContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactTokensForTokensSupportingFeeOnTransferTokens"`
  */
 export const writeRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens =
@@ -2773,22 +1825,32 @@ export const writeRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens =
   })
 
 /**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapTokensForExactETH"`
+ */
+export const writeRouterSwapTokensForExactEth =
+  /*#__PURE__*/ createWriteContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapTokensForExactETH',
+  })
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapTokensForExactTokens"`
+ */
+export const writeRouterSwapTokensForExactTokens =
+  /*#__PURE__*/ createWriteContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapTokensForExactTokens',
+  })
+
+/**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__
  */
 export const simulateRouter = /*#__PURE__*/ createSimulateContract({
   abi: routerAbi,
   address: routerAddress,
 })
-
-/**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"UNSAFE_swapExactTokensForTokens"`
- */
-export const simulateRouterUnsafeSwapExactTokensForTokens =
-  /*#__PURE__*/ createSimulateContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'UNSAFE_swapExactTokensForTokens',
-  })
 
 /**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"addLiquidity"`
@@ -2870,6 +1932,16 @@ export const simulateRouterRemoveLiquidityWithPermit =
   })
 
 /**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapETHForExactTokens"`
+ */
+export const simulateRouterSwapEthForExactTokens =
+  /*#__PURE__*/ createSimulateContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapETHForExactTokens',
+  })
+
+/**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactETHForTokens"`
  */
 export const simulateRouterSwapExactEthForTokens =
@@ -2920,16 +1992,6 @@ export const simulateRouterSwapExactTokensForTokens =
   })
 
 /**
- * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactTokensForTokensSimple"`
- */
-export const simulateRouterSwapExactTokensForTokensSimple =
-  /*#__PURE__*/ createSimulateContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'swapExactTokensForTokensSimple',
-  })
-
-/**
  * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactTokensForTokensSupportingFeeOnTransferTokens"`
  */
 export const simulateRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens =
@@ -2937,6 +1999,169 @@ export const simulateRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens
     abi: routerAbi,
     address: routerAddress,
     functionName: 'swapExactTokensForTokensSupportingFeeOnTransferTokens',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapTokensForExactETH"`
+ */
+export const simulateRouterSwapTokensForExactEth =
+  /*#__PURE__*/ createSimulateContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapTokensForExactETH',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapTokensForExactTokens"`
+ */
+export const simulateRouterSwapTokensForExactTokens =
+  /*#__PURE__*/ createSimulateContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapTokensForExactTokens',
+  })
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link uniFactoryAbi}__
+ */
+export const readUniFactory = /*#__PURE__*/ createReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"allPairs"`
+ */
+export const readUniFactoryAllPairs = /*#__PURE__*/ createReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'allPairs',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"allPairsLength"`
+ */
+export const readUniFactoryAllPairsLength = /*#__PURE__*/ createReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'allPairsLength',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"feeTo"`
+ */
+export const readUniFactoryFeeTo = /*#__PURE__*/ createReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'feeTo',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"feeToSetter"`
+ */
+export const readUniFactoryFeeToSetter = /*#__PURE__*/ createReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'feeToSetter',
+})
+
+/**
+ * Wraps __{@link readContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"getPair"`
+ */
+export const readUniFactoryGetPair = /*#__PURE__*/ createReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'getPair',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link uniFactoryAbi}__
+ */
+export const writeUniFactory = /*#__PURE__*/ createWriteContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"createPair"`
+ */
+export const writeUniFactoryCreatePair = /*#__PURE__*/ createWriteContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'createPair',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"setFeeTo"`
+ */
+export const writeUniFactorySetFeeTo = /*#__PURE__*/ createWriteContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'setFeeTo',
+})
+
+/**
+ * Wraps __{@link writeContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"setFeeToSetter"`
+ */
+export const writeUniFactorySetFeeToSetter = /*#__PURE__*/ createWriteContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'setFeeToSetter',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link uniFactoryAbi}__
+ */
+export const simulateUniFactory = /*#__PURE__*/ createSimulateContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"createPair"`
+ */
+export const simulateUniFactoryCreatePair =
+  /*#__PURE__*/ createSimulateContract({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'createPair',
+  })
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"setFeeTo"`
+ */
+export const simulateUniFactorySetFeeTo = /*#__PURE__*/ createSimulateContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'setFeeTo',
+})
+
+/**
+ * Wraps __{@link simulateContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"setFeeToSetter"`
+ */
+export const simulateUniFactorySetFeeToSetter =
+  /*#__PURE__*/ createSimulateContract({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'setFeeToSetter',
+  })
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link uniFactoryAbi}__
+ */
+export const watchUniFactoryEvent = /*#__PURE__*/ createWatchContractEvent({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+})
+
+/**
+ * Wraps __{@link watchContractEvent}__ with `abi` set to __{@link uniFactoryAbi}__ and `eventName` set to `"PairCreated"`
+ */
+export const watchUniFactoryPairCreatedEvent =
+  /*#__PURE__*/ createWatchContractEvent({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    eventName: 'PairCreated',
   })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3147,65 +2372,6 @@ export const useReadPairBalanceOf = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"blockTimestampLast"`
- */
-export const useReadPairBlockTimestampLast =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairAbi,
-    functionName: 'blockTimestampLast',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimable0"`
- */
-export const useReadPairClaimable0 = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'claimable0',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimable1"`
- */
-export const useReadPairClaimable1 = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'claimable1',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"computeAmountOut"`
- */
-export const useReadPairComputeAmountOut = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'computeAmountOut',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"current"`
- */
-export const useReadPairCurrent = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'current',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"currentBlockTimestamp"`
- */
-export const useReadPairCurrentBlockTimestamp =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairAbi,
-    functionName: 'currentBlockTimestamp',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"currentCumulativePrices"`
- */
-export const useReadPairCurrentCumulativePrices =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairAbi,
-    functionName: 'currentCumulativePrices',
-  })
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"decimals"`
  */
 export const useReadPairDecimals = /*#__PURE__*/ createUseReadContract({
@@ -3214,19 +2380,11 @@ export const useReadPairDecimals = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"fees"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"factory"`
  */
-export const useReadPairFees = /*#__PURE__*/ createUseReadContract({
+export const usereadUniFactory = /*#__PURE__*/ createUseReadContract({
   abi: pairAbi,
-  functionName: 'fees',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"getAmountOut"`
- */
-export const useReadPairGetAmountOut = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'getAmountOut',
+  functionName: 'factory',
 })
 
 /**
@@ -3238,27 +2396,11 @@ export const useReadPairGetReserves = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"index0"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"kLast"`
  */
-export const useReadPairIndex0 = /*#__PURE__*/ createUseReadContract({
+export const useReadPairKLast = /*#__PURE__*/ createUseReadContract({
   abi: pairAbi,
-  functionName: 'index0',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"index1"`
- */
-export const useReadPairIndex1 = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'index1',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"lastObservation"`
- */
-export const useReadPairLastObservation = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'lastObservation',
+  functionName: 'kLast',
 })
 
 /**
@@ -3278,29 +2420,6 @@ export const useReadPairNonces = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"observationLength"`
- */
-export const useReadPairObservationLength = /*#__PURE__*/ createUseReadContract(
-  { abi: pairAbi, functionName: 'observationLength' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"observations"`
- */
-export const useReadPairObservations = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'observations',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"periodSize"`
- */
-export const useReadPairPeriodSize = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'periodSize',
-})
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"price0CumulativeLast"`
  */
 export const useReadPairPrice0CumulativeLast =
@@ -3317,86 +2436,6 @@ export const useReadPairPrice1CumulativeLast =
     abi: pairAbi,
     functionName: 'price1CumulativeLast',
   })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"prices"`
- */
-export const useReadPairPrices = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'prices',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"quote"`
- */
-export const useReadPairQuote = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'quote',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"reserve0"`
- */
-export const useReadPairReserve0 = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'reserve0',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"reserve0Last"`
- */
-export const useReadPairReserve0Last = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'reserve0Last',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"reserve1"`
- */
-export const useReadPairReserve1 = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'reserve1',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"reserve1Last"`
- */
-export const useReadPairReserve1Last = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'reserve1Last',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"sample"`
- */
-export const useReadPairSample = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'sample',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"stable"`
- */
-export const useReadPairStable = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'stable',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"supplyIndex0"`
- */
-export const useReadPairSupplyIndex0 = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'supplyIndex0',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"supplyIndex1"`
- */
-export const useReadPairSupplyIndex1 = /*#__PURE__*/ createUseReadContract({
-  abi: pairAbi,
-  functionName: 'supplyIndex1',
-})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"symbol"`
@@ -3454,19 +2493,11 @@ export const useWritePairBurn = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimFees"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"initialize"`
  */
-export const useWritePairClaimFees = /*#__PURE__*/ createUseWriteContract({
+export const useWritePairInitialize = /*#__PURE__*/ createUseWriteContract({
   abi: pairAbi,
-  functionName: 'claimFees',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimFeesFor"`
- */
-export const useWritePairClaimFeesFor = /*#__PURE__*/ createUseWriteContract({
-  abi: pairAbi,
-  functionName: 'claimFeesFor',
+  functionName: 'initialize',
 })
 
 /**
@@ -3549,19 +2580,12 @@ export const useSimulatePairBurn = /*#__PURE__*/ createUseSimulateContract({
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimFees"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"initialize"`
  */
-export const useSimulatePairClaimFees = /*#__PURE__*/ createUseSimulateContract(
-  { abi: pairAbi, functionName: 'claimFees' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairAbi}__ and `functionName` set to `"claimFeesFor"`
- */
-export const useSimulatePairClaimFeesFor =
+export const useSimulatePairInitialize =
   /*#__PURE__*/ createUseSimulateContract({
     abi: pairAbi,
-    functionName: 'claimFeesFor',
+    functionName: 'initialize',
   })
 
 /**
@@ -3646,14 +2670,6 @@ export const useWatchPairBurnEvent = /*#__PURE__*/ createUseWatchContractEvent({
 })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link pairAbi}__ and `eventName` set to `"Fees"`
- */
-export const useWatchPairFeesEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: pairAbi,
-  eventName: 'Fees',
-})
-
-/**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link pairAbi}__ and `eventName` set to `"Mint"`
  */
 export const useWatchPairMintEvent = /*#__PURE__*/ createUseWatchContractEvent({
@@ -3687,337 +2703,20 @@ export const useWatchPairTransferEvent =
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__
- */
-export const useReadPairFactory = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"MAX_FEE"`
- */
-export const useReadPairFactoryMaxFee = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'MAX_FEE',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"allPairs"`
- */
-export const useReadPairFactoryAllPairs = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'allPairs',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"allPairsLength"`
- */
-export const useReadPairFactoryAllPairsLength =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'allPairsLength',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"feeManager"`
- */
-export const useReadPairFactoryFeeManager = /*#__PURE__*/ createUseReadContract(
-  {
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'feeManager',
-  },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"getFee"`
- */
-export const useReadPairFactoryGetFee = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'getFee',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"getInitializable"`
- */
-export const useReadPairFactoryGetInitializable =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'getInitializable',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"getPair"`
- */
-export const useReadPairFactoryGetPair = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'getPair',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"isPair"`
- */
-export const useReadPairFactoryIsPair = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'isPair',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"isPaused"`
- */
-export const useReadPairFactoryIsPaused = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'isPaused',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"pairCodeHash"`
- */
-export const useReadPairFactoryPairCodeHash =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'pairCodeHash',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"pauser"`
- */
-export const useReadPairFactoryPauser = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'pauser',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"pendingFeeManager"`
- */
-export const useReadPairFactoryPendingFeeManager =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'pendingFeeManager',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"pendingPauser"`
- */
-export const useReadPairFactoryPendingPauser =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'pendingPauser',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"stableFee"`
- */
-export const useReadPairFactoryStableFee = /*#__PURE__*/ createUseReadContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'stableFee',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"volatileFee"`
- */
-export const useReadPairFactoryVolatileFee =
-  /*#__PURE__*/ createUseReadContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'volatileFee',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairFactoryAbi}__
- */
-export const useWritePairFactory = /*#__PURE__*/ createUseWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"acceptFeeManager"`
- */
-export const useWritePairFactoryAcceptFeeManager =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'acceptFeeManager',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"acceptPauser"`
- */
-export const useWritePairFactoryAcceptPauser =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'acceptPauser',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"createPair"`
- */
-export const useWritePairFactoryCreatePair =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'createPair',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setFee"`
- */
-export const useWritePairFactorySetFee = /*#__PURE__*/ createUseWriteContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-  functionName: 'setFee',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setFeeManager"`
- */
-export const useWritePairFactorySetFeeManager =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setFeeManager',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setPause"`
- */
-export const useWritePairFactorySetPause = /*#__PURE__*/ createUseWriteContract(
-  {
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setPause',
-  },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setPauser"`
- */
-export const useWritePairFactorySetPauser =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setPauser',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairFactoryAbi}__
- */
-export const useSimulatePairFactory = /*#__PURE__*/ createUseSimulateContract({
-  abi: pairFactoryAbi,
-  address: pairFactoryAddress,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"acceptFeeManager"`
- */
-export const useSimulatePairFactoryAcceptFeeManager =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'acceptFeeManager',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"acceptPauser"`
- */
-export const useSimulatePairFactoryAcceptPauser =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'acceptPauser',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"createPair"`
- */
-export const useSimulatePairFactoryCreatePair =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'createPair',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setFee"`
- */
-export const useSimulatePairFactorySetFee =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setFee',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setFeeManager"`
- */
-export const useSimulatePairFactorySetFeeManager =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setFeeManager',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setPause"`
- */
-export const useSimulatePairFactorySetPause =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setPause',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link pairFactoryAbi}__ and `functionName` set to `"setPauser"`
- */
-export const useSimulatePairFactorySetPauser =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    functionName: 'setPauser',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link pairFactoryAbi}__
- */
-export const useWatchPairFactoryEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link pairFactoryAbi}__ and `eventName` set to `"PairCreated"`
- */
-export const useWatchPairFactoryPairCreatedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: pairFactoryAbi,
-    address: pairFactoryAddress,
-    eventName: 'PairCreated',
-  })
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__
  */
 export const useReadRouter = /*#__PURE__*/ createUseReadContract({
   abi: routerAbi,
   address: routerAddress,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"WETH"`
+ */
+export const useReadRouterWeth = /*#__PURE__*/ createUseReadContract({
+  abi: routerAbi,
+  address: routerAddress,
+  functionName: 'WETH',
 })
 
 /**
@@ -4030,12 +2729,30 @@ export const useReadRouterFactory = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"getAmountIn"`
+ */
+export const useReadRouterGetAmountIn = /*#__PURE__*/ createUseReadContract({
+  abi: routerAbi,
+  address: routerAddress,
+  functionName: 'getAmountIn',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"getAmountOut"`
  */
 export const useReadRouterGetAmountOut = /*#__PURE__*/ createUseReadContract({
   abi: routerAbi,
   address: routerAddress,
   functionName: 'getAmountOut',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"getAmountsIn"`
+ */
+export const useReadRouterGetAmountsIn = /*#__PURE__*/ createUseReadContract({
+  abi: routerAbi,
+  address: routerAddress,
+  functionName: 'getAmountsIn',
 })
 
 /**
@@ -4048,68 +2765,12 @@ export const useReadRouterGetAmountsOut = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"getReserves"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"quote"`
  */
-export const useReadRouterGetReserves = /*#__PURE__*/ createUseReadContract({
+export const useReadRouterQuote = /*#__PURE__*/ createUseReadContract({
   abi: routerAbi,
   address: routerAddress,
-  functionName: 'getReserves',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"isPair"`
- */
-export const useReadRouterIsPair = /*#__PURE__*/ createUseReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'isPair',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"pairFor"`
- */
-export const useReadRouterPairFor = /*#__PURE__*/ createUseReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'pairFor',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"quoteAddLiquidity"`
- */
-export const useReadRouterQuoteAddLiquidity =
-  /*#__PURE__*/ createUseReadContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'quoteAddLiquidity',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"quoteRemoveLiquidity"`
- */
-export const useReadRouterQuoteRemoveLiquidity =
-  /*#__PURE__*/ createUseReadContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'quoteRemoveLiquidity',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"sortTokens"`
- */
-export const useReadRouterSortTokens = /*#__PURE__*/ createUseReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'sortTokens',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"weth"`
- */
-export const useReadRouterWeth = /*#__PURE__*/ createUseReadContract({
-  abi: routerAbi,
-  address: routerAddress,
-  functionName: 'weth',
+  functionName: 'quote',
 })
 
 /**
@@ -4119,16 +2780,6 @@ export const useWriteRouter = /*#__PURE__*/ createUseWriteContract({
   abi: routerAbi,
   address: routerAddress,
 })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"UNSAFE_swapExactTokensForTokens"`
- */
-export const useWriteRouterUnsafeSwapExactTokensForTokens =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'UNSAFE_swapExactTokensForTokens',
-  })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"addLiquidity"`
@@ -4210,6 +2861,16 @@ export const useWriteRouterRemoveLiquidityWithPermit =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapETHForExactTokens"`
+ */
+export const useWriteRouterSwapEthForExactTokens =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapETHForExactTokens',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactETHForTokens"`
  */
 export const useWriteRouterSwapExactEthForTokens =
@@ -4260,16 +2921,6 @@ export const useWriteRouterSwapExactTokensForTokens =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactTokensForTokensSimple"`
- */
-export const useWriteRouterSwapExactTokensForTokensSimple =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'swapExactTokensForTokensSimple',
-  })
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactTokensForTokensSupportingFeeOnTransferTokens"`
  */
 export const useWriteRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens =
@@ -4280,22 +2931,32 @@ export const useWriteRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapTokensForExactETH"`
+ */
+export const useWriteRouterSwapTokensForExactEth =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapTokensForExactETH',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapTokensForExactTokens"`
+ */
+export const useWriteRouterSwapTokensForExactTokens =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapTokensForExactTokens',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__
  */
 export const useSimulateRouter = /*#__PURE__*/ createUseSimulateContract({
   abi: routerAbi,
   address: routerAddress,
 })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"UNSAFE_swapExactTokensForTokens"`
- */
-export const useSimulateRouterUnsafeSwapExactTokensForTokens =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'UNSAFE_swapExactTokensForTokens',
-  })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"addLiquidity"`
@@ -4378,6 +3039,16 @@ export const useSimulateRouterRemoveLiquidityWithPermit =
   })
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapETHForExactTokens"`
+ */
+export const useSimulateRouterSwapEthForExactTokens =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapETHForExactTokens',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactETHForTokens"`
  */
 export const useSimulateRouterSwapExactEthForTokens =
@@ -4428,16 +3099,6 @@ export const useSimulateRouterSwapExactTokensForTokens =
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactTokensForTokensSimple"`
- */
-export const useSimulateRouterSwapExactTokensForTokensSimple =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: routerAbi,
-    address: routerAddress,
-    functionName: 'swapExactTokensForTokensSimple',
-  })
-
-/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapExactTokensForTokensSupportingFeeOnTransferTokens"`
  */
 export const useSimulateRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens =
@@ -4445,4 +3106,174 @@ export const useSimulateRouterSwapExactTokensForTokensSupportingFeeOnTransferTok
     abi: routerAbi,
     address: routerAddress,
     functionName: 'swapExactTokensForTokensSupportingFeeOnTransferTokens',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapTokensForExactETH"`
+ */
+export const useSimulateRouterSwapTokensForExactEth =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapTokensForExactETH',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link routerAbi}__ and `functionName` set to `"swapTokensForExactTokens"`
+ */
+export const useSimulateRouterSwapTokensForExactTokens =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: routerAbi,
+    address: routerAddress,
+    functionName: 'swapTokensForExactTokens',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link uniFactoryAbi}__
+ */
+export const useReadUniFactory = /*#__PURE__*/ createUseReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"allPairs"`
+ */
+export const useReadUniFactoryAllPairs = /*#__PURE__*/ createUseReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'allPairs',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"allPairsLength"`
+ */
+export const useReadUniFactoryAllPairsLength =
+  /*#__PURE__*/ createUseReadContract({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'allPairsLength',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"feeTo"`
+ */
+export const useReadUniFactoryFeeTo = /*#__PURE__*/ createUseReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'feeTo',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"feeToSetter"`
+ */
+export const useReadUniFactoryFeeToSetter = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'feeToSetter',
+  },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"getPair"`
+ */
+export const useReadUniFactoryGetPair = /*#__PURE__*/ createUseReadContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'getPair',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link uniFactoryAbi}__
+ */
+export const useWriteUniFactory = /*#__PURE__*/ createUseWriteContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"createPair"`
+ */
+export const useWriteUniFactoryCreatePair =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'createPair',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"setFeeTo"`
+ */
+export const useWriteUniFactorySetFeeTo = /*#__PURE__*/ createUseWriteContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+  functionName: 'setFeeTo',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"setFeeToSetter"`
+ */
+export const useWriteUniFactorySetFeeToSetter =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'setFeeToSetter',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link uniFactoryAbi}__
+ */
+export const useSimulateUniFactory = /*#__PURE__*/ createUseSimulateContract({
+  abi: uniFactoryAbi,
+  address: uniFactoryAddress,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"createPair"`
+ */
+export const useSimulateUniFactoryCreatePair =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'createPair',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"setFeeTo"`
+ */
+export const useSimulateUniFactorySetFeeTo =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'setFeeTo',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link uniFactoryAbi}__ and `functionName` set to `"setFeeToSetter"`
+ */
+export const useSimulateUniFactorySetFeeToSetter =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    functionName: 'setFeeToSetter',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link uniFactoryAbi}__
+ */
+export const useWatchUniFactoryEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link uniFactoryAbi}__ and `eventName` set to `"PairCreated"`
+ */
+export const useWatchUniFactoryPairCreatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: uniFactoryAbi,
+    address: uniFactoryAddress,
+    eventName: 'PairCreated',
   })

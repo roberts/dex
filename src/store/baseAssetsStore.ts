@@ -29,6 +29,7 @@ export const useBaseAssetStore = create<BaseAssetState>()(
         await fetchAggregatedTokenData()
           .then(result => {
             set({ baseAssets: result });
+            console.log("fetchAggregatedTokenData : ", result);
           })
           .catch(error => console.log(error));
         set({ isLoading: false });

@@ -1,6 +1,6 @@
 import { factoryABI, routerABI } from '@/config/abis';
-import * as MAINNET from '@/config/';
-import * as TESTNET from '@/config/contracts';
+import * as MAINNET from '@/config/contracts';
+import * as TESTNET from '@/config/contractsTestnet';
 import { defineConfig, loadEnv } from '@wagmi/cli';
 import { actions, react } from '@wagmi/cli/plugins';
 
@@ -14,21 +14,21 @@ export default defineConfig(() => {
 
   contracts = [
     {
-      abi: TESTNET.FACTORY_ABI,
-      address: TESTNET.FACTORY_ADDRESS,
-      name: 'PairFactory',
+      abi: MAINNET.FACTORY_ABI,
+      address: MAINNET.FACTORY_ADDRESS,
+      name: 'UniFactory',
     },
     {
-      abi: TESTNET.ROUTER_ABI,
-      address: TESTNET.ROUTER_ADDRESS,
+      abi: MAINNET.ROUTER_ABI,
+      address: MAINNET.ROUTER_ADDRESS,
       name: 'Router',
     },
     {
-      abi: TESTNET.ERC20_ABI,
+      abi: MAINNET.ERC20_ABI,
       name: 'Erc20',
     },
     {
-      abi: TESTNET.PAIR_ABI,
+      abi: MAINNET.PAIR_ABI,
       name: 'Pair',
     },
   ];
@@ -36,5 +36,6 @@ export default defineConfig(() => {
     out: 'src/lib/swamp.ts',
     contracts: contracts,
     plugins: [actions(), react()],
+    
   };
 });

@@ -110,15 +110,8 @@ export default function Home() {
           getUnixTime(add(Date.now(), { seconds: Number(100) }))
         );
 
-        const rawRoutes: {
-          from: `0x${string}`;
-          to: `0x${string}`;
-          stable: boolean;
-        }[] = [{
-          from: inputAsset?.address === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!,
-          to: outputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : outputAsset?.address!,
-          stable: false,
-        }]
+        const rawRoutes = [inputAsset?.address === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!, 
+          outputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : outputAsset?.address!];
         // const rawRoutes = [inputAsset?.address!, outputAsset?.address!];
 
         const transactionToast: TransactionText = {
@@ -135,6 +128,7 @@ export default function Home() {
           console.log("Mike 7", rawRoutes);   
           console.log("Mike 7", address);   
           console.log("Mike 7", minAmountOutBigInt);   
+          console.log("Mike 7", deadline);  
           // const { request } = 
           let result = await writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
             ///@ts-expect-error

@@ -7,6 +7,7 @@ import {
   } from './abis';
   
   export const GOV_TOKEN_ADDRESS = '0xc3De830EA07524a0761646a6a4e4be0e114a3C83';
+  export const USDC_TOKEN_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
   
   // PairFactory
   export const FACTORY_ADDRESS = '0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6';
@@ -20,7 +21,7 @@ import {
   export const ROUTER_ABI = routerABI;
   
   export const WETH_ADDRESS = '0x4200000000000000000000000000000000000006';
-  export const COIN_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+  export const COIN_ADDRESS = '0x4200000000000000000000000000000000000006';
   export const COIN_DECIMALS = 18;
   export const COIN_NAME = "ether";
   export const COIN_SYMBOL = "ETH";

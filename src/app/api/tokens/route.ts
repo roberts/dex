@@ -13,6 +13,18 @@ export async function POST(req: Request) {
     baseAssets = mapToken(baseAssets);
     baseAssets.unshift(
       {
+        address: CONTRACTS.USDC_TOKEN_ADDRESS,
+        decimals: 6,
+        name: "USD Coin",
+        symbol: "USDC",
+        stable: true,
+        price: 1,
+        liquidStakedAddress: "",
+        balance: 0.0,
+      }
+    );
+    baseAssets.unshift(
+      {
         address: CONTRACTS.COIN_ADDRESS,
         decimals: CONTRACTS.COIN_DECIMALS,
         name: CONTRACTS.COIN_NAME,
