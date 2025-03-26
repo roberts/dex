@@ -35,7 +35,7 @@
     "**/*.tsx",
     "next-env.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "src/lib/providersts", "src/lib/providersts"  ],
   "exclude": [
     "node_modules"
   ]

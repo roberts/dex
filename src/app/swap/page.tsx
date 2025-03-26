@@ -3,8 +3,33 @@
 import Link from "next/link";
 import { useEffect } from 'react';
 import { useAccount } from 'wagmi';
+import BigNumber from 'bignumber.js';
+import { add, getUnixTime } from 'date-fns';
+
 import SwampAvatar from '@/components/core/SwampAvatar';
 import SwapButton from './components/SwapButton';
+import { CONTRACTS } from '@/config';
+import {
+  // prepareWriteErc20,
+  // prepareWriteRouter,
+  // prepareWriteWrappedKava,
+  readErc20,
+  simulateRouterSwapExactEthForTokensSupportingFeeOnTransferTokens,
+  simulateRouterSwapExactTokensForEthSupportingFeeOnTransferTokens,
+  simulateRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens,
+  simulateErc20Approve,
+  writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens,
+  writeRouterSwapExactTokensForEthSupportingFeeOnTransferTokens,
+  writeRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens,
+  writeErc20Approve,
+  // writeWrappedKava,
+} from '@/lib/swamp';
+import { getBalanceInWei, getBigNumberFromString } from '@/utils/formatBalance';
+import { displayNumber } from '@/utils/formatNumbers';
+import { wagmiConfig } from '@/config/wagmiConfig';
+import { Token, TransactionText } from '@/interfaces';
+import { callContractWait } from '@/lib/callContractWait';
+import generateToast from '@/components/toast/generateToast';
 
 import {
   Avatar,
@@ -20,12 +45,14 @@ import {
   ModalOverlay,
   ModalContent
 } from '@chakra-ui/react';
+import { useState } from 'react';
 import TokenSelector from '@/components/uis/TokenSelector';
 import { useSwapStore } from '@/store/swap/swapStore';
 import { shallow } from 'zustand/shallow';
 
 export default function Home() {
   const { address, status, isConnected } = useAccount();
+  const [inputBalance, setInputBalance] = useState('');
   const {
     inputAsset,
     outputAsset,
@@ -45,14 +72,153 @@ export default function Home() {
     }),
     shallow
   );
+  const handleChange = (valueAsString: string, valueAsNumber: number) => {
+    setInputBalance(valueAsString);
+  };
   useEffect(() => {
     initAssets();
   }, [address, isConnected]);
   
-  const onSwapClick = () => {
-    alert("swap");
+  const onSwapClick = async () => {
+    try {
+        //* 1st step: check allowance
+        if(inputAsset?.address === undefined || outputAsset?.address === undefined) {
+          generateToast("Invalid tokens", "Please select in & out tokens", 'error');
+          return;
+        }
+        const allowance = await checkAllowanceAndApprove(
+          CONTRACTS.ROUTER_ADDRESS
+        );
+        if (!allowance) return;
+        //* 2nd step: swap
+        let slippage = 5;   // set slippage tolerance as 5% as temporary
+        const sendSlippage = BigNumber(100).minus(slippage).div(100);
+        const inAmountBigInt = getBalanceInWei(
+          inputBalance!,
+          inputAsset?.decimals! as number
+        ).toBigInt();
+
+        // const minAmountOutBigInt = getBalanceInWei(
+        //   BigNumber(swapQuote?.outAmount!)
+        //     .times(sendSlippage)
+        //     .toFixed(outputAsset?.decimals! as number),
+        //   outputAsset?.decimals! as number
+        // ).toBigInt();
+        const minAmountOutBigInt = 0;
+
+        const deadline = BigInt(
+          getUnixTime(add(Date.now(), { seconds: Number(100) }))
+        );
+
+        const rawRoutes = [inputAsset?.address === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!, 
+          outputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : outputAsset?.address!];
+        // const rawRoutes = [inputAsset?.address!, outputAsset?.address!];
+
+        const transactionToast: TransactionText = {
+          title: 'Swap has been successful!',
+          description: `Swapped ${inputBalance!} ${
+            inputAsset?.symbol
+          } to ${displayNumber("0xaaaaaaaaaa")} ${outputAsset?.symbol}`,
+        };
+
+        if (
+          inputAsset?.address.toLowerCase() ===
+          CONTRACTS.COIN_ADDRESS.toLowerCase()
+        ) {
+          console.log("Mike 7", rawRoutes);   
+          console.log("Mike 7", address);   
+          console.log("Mike 7", minAmountOutBigInt);   
+          console.log("Mike 7", deadline);  
+          // const { request } = 
+          let result = await writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
+            ///@ts-expect-error
+            args: [minAmountOutBigInt, rawRoutes, address!, deadline],
+            value: inAmountBigInt,
+          });
+          console.log("Mike 77 : ", result);   
+          // await callContractWait(request, transactionToast);
+        } else if (
+          outputAsset?.address.toLowerCase() ===
+          CONTRACTS.COIN_ADDRESS.toLowerCase()
+        ) {
+          console.log("Mike 8");   
+          // const { request } = 
+          await writeRouterSwapExactTokensForEthSupportingFeeOnTransferTokens(wagmiConfig, {
+            args: [
+              //@ts-ignore
+              inAmountBigInt,
+              //@ts-ignore
+              minAmountOutBigInt,
+              rawRoutes,
+              address!,
+              deadline,
+            ],
+          });
+          // await callContractWait(request, transactionToast);
+        } else {
+          console.log("Mike 9");   
+          // const { request } = 
+          await writeRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
+            args: [
+                //@ts-ignore
+                inAmountBigInt,
+                //@ts-ignore
+                minAmountOutBigInt,
+                rawRoutes,
+                address!,
+                deadline,
+            ],
+          });
+          // await callContractWait(request, transactionToast);
+        }
+      
+    } catch (err) {
+      console.log(err);
+      generateToast(
+        'Swap has failed!',
+        'Please try again later, if the problem persists contact support.',
+        'error'
+      );
+      // updateAssets();
+    }
   }
 
+  const checkAllowanceAndApprove = async (routerAddress: `0x${string}`) => {
+    if (
+      inputAsset?.address.toLowerCase() !== CONTRACTS.COIN_ADDRESS.toLowerCase()
+    ) {
+      let allowance: bigint | BigNumber = await readErc20(wagmiConfig, {
+        address: inputAsset?.address!,
+        functionName: 'allowance',
+        args: [address!, routerAddress],
+      });
+      allowance = BigNumber(Number(allowance)).div(
+        10 ** Number(inputAsset?.decimals!)
+      );
+      console.log(inputBalance);
+      if (allowance.gt(inputBalance)) {
+        console.log('allowance is enough');
+        return true;
+      } else {
+        console.log('allowance is not enough');
+        const inAmountBigInt = getBalanceInWei(
+          inputBalance,
+          inputAsset?.decimals! as number
+        ).toBigInt();
+        // const { request } = 
+        await writeErc20Approve(wagmiConfig, {
+          address: inputAsset?.address!,
+          args: [routerAddress, inAmountBigInt],
+        });
+
+        // return await callContractWait(request, {
+        //   title: 'Approve has been successful!',
+        //   description: `Token ${inputAsset?.symbol} has been approved!`,
+        // });
+      }
+    }
+    return true;
+  };
   return (
     <Box className="w-full flex flex-col" fontFamily={'Proto'}>
       <Box className="flex justify-center mt-4">
@@ -83,6 +249,8 @@ export default function Home() {
                       step={0.1}
                       clampValueOnBlur={false}
                       min={0}
+                      value={inputBalance}
+                      onChange={handleChange}
                       variant={'unstyled'}>
                       <NumberInputField
                         className="bg-transparent"
@@ -124,7 +292,9 @@ export default function Home() {
               </Box>
             </Box>
             <Box className="box-border bg-gray-500/20 p-4 rounded-lg ">
-              <Box fontSize={'0.875rem'}>BUY</Box>
+              <Box fontSize={'0.875rem'}>
+                BUY
+              </Box>
               <Box className='flex justify-between'>                  
                 <Box fontSize={'1.75rem'} className={'text-gray-400'}>
                   0

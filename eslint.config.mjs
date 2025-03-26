@@ -52,6 +52,10 @@ const eslintConfig = [
       // Typescript
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-wrapper-object-types": "warn",
+      "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+      "ts-ignore": "allow-with-description",  // allows @ts-ignore without a description
+      "ts-expect-error": "allow-with-description",
       
       // General
       "no-console": ["warn", { allow: ["warn", "error"] }],

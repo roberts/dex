@@ -4,8 +4,8 @@ import { useBaseAssetStore } from '@/store/baseAssetsStore';
 import { getBalance, getAccount } from 'wagmi/actions';
 import { mainnet } from 'wagmi/chains';  // Or another chain if needed
 import { create } from 'zustand';
-import { readPairFactory } from '@/lib/swamp';
-import { wagmiConfig } from '@/lib/constants/wagmiConfig'
+import { readUniFactory } from '@/lib/swamp';
+import { wagmiConfig } from '@/config/wagmiConfig'
 
 interface SwapState {
   inputAsset?: Token;
@@ -26,7 +26,6 @@ interface SwapState {
     getSwapQuote: () => void;
     // cleanRoute: () => void;
     changeDisplayRoute: (value: boolean) => void;
-    getFeePercentage: () => Promise<{ stableFee: number; volatileFee: number }>;
     setPriceImpact: (value: string) => void;
   };
 }
@@ -160,19 +159,7 @@ export const useSwapStore = create<SwapState>((set, get) => ({
     },
     // cleanRoute: () => set({ swapQuote: {} }),
     changeDisplayRoute: (value: boolean) => set({ displayRoute: value }),
-    getFeePercentage: async () => {
-      const stableFee = await readPairFactory(wagmiConfig, {
-        functionName: 'stableFee',
-      });
-      const volatileFee = await readPairFactory(wagmiConfig, {
-        functionName: 'volatileFee',
-      });
 
-      return {
-        stableFee: Number(stableFee) / 100,
-        volatileFee: Number(volatileFee) / 100,
-      };
-    },
     setPriceImpact: (value: string) => set({ priceImpact: value }),
   },
 }));

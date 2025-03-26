@@ -61,9 +61,8 @@ const generateToast = (
           mt={{ base: 0, md: -10 }}
           ml={{ base: 0, md: 10 }}
           mb={{ base: 0, md: 10 }}
-          bg={'darkblue.500'}
+          className={`bg-blue-500 border border-${color}-500`}
           border={'1px solid'}
-          borderColor={`${color}.500`}
           borderRadius={'2xl'}
           p={4}
           width={{ base: '75vw', md: '25vw' }}
@@ -79,9 +78,9 @@ const generateToast = (
           />
           <HStack>
             {status === 'loading' ? (
-              <Spinner size={'sm'} color={`${color}.500`} />
+              <Spinner size={'sm'} color={`${color}.500`} className={`bg-${color}-500`} />
             ) : (
-              <Icon as={icon} color={`${color}.500`} />
+              <Icon as={icon} color={`${color}.500`} className={`bg-${color}-500`} />
             )}
 
             <Text fontSize={'md'}>{title}</Text>
@@ -104,7 +103,7 @@ const generateToast = (
                 isExternal
                 display={'inline-flex'}
                 mt={2}
-                color={`${color}.500`}>
+                className={`bg-${color}-500`}>
                 <ExternalLinkIcon mr={2} />
                 <Text fontSize={'sm'}>View transaction in explorer</Text>
               </Link>

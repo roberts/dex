@@ -5,7 +5,7 @@ import axios from 'axios';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { fetchTokenData } from '@/utils/fetchData';
+import { fetchTokenData, fetchAggregatedTokenData } from '@/utils/fetchData';
 
 interface BaseAssetState {
   baseAssets: Token[];
@@ -26,28 +26,10 @@ export const useBaseAssetStore = create<BaseAssetState>()(
       initBaseAssets: async () => {
         console.log(process.env.NEXT_PUBLIC_UNISWAP_BASE_SUBGRAPH_URL);
         set({ isLoading: true });
-        await fetchTokenData()
+        await fetchAggregatedTokenData()
           .then(result => {
-            let baseAssets = result?.data.tokens;
-            // baseAssets.add(CONTRACTS.COIN_ADDRESS);
-
-            console.log('Fetched tokens:', baseAssets);
-            baseAssets = mapToken(baseAssets);
-
-            baseAssets.unshift(
-              {
-                address: CONTRACTS.COIN_ADDRESS,
-                decimals: CONTRACTS.COIN_DECIMALS,
-                name: CONTRACTS.COIN_NAME,
-                symbol: CONTRACTS.COIN_SYMBOL,
-                stable: false,
-                price: 0,
-                liquidStakedAddress: "",
-                balance: 0.0,
-              }
-            );
-
-            set({ baseAssets });
+            set({ baseAssets: result });
+            console.log("fetchAggregatedTokenData : ", result);
           })
           .catch(error => console.log(error));
         set({ isLoading: false });
