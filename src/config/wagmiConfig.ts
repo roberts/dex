@@ -40,16 +40,6 @@ const RPC_URLS = {
   LOCALHOST: [
     localhost.rpcUrls.default.http[0], // Default RPC
   ],
-  MAINNET: [
-    mainnet.rpcUrls.default.http[0], // Default RPC
-    'https://rpc.ankr.com/eth', // Ankr
-    'https://eth.llamarpc.com', // Llama
-  ],
-  ARBITRUM: [
-    arbitrum.rpcUrls.default.http[0], // Default RPC
-    'https://rpc.ankr.com/arbitrum', // Ankr
-    'https://arbitrum.llamarpc.com', // Llama
-  ],
 } as const;
 
 /**
@@ -57,8 +47,6 @@ const RPC_URLS = {
  * @description Fallback configuration for RPC endpoints
  */
 const transports = {
-  [mainnet.id]: fallback(RPC_URLS.MAINNET.map((url) => http(url))),
-  [arbitrum.id]: fallback(RPC_URLS.ARBITRUM.map((url) => http(url))),
   [base.id]: fallback(RPC_URLS.BASE.map((url) => http(url))),
   [localhost.id]: fallback(RPC_URLS.LOCALHOST.map((url) => http(url))),
 };
@@ -97,8 +85,7 @@ export const wagmiConfig = getDefaultConfig({
   wallets: wallets,
   chains: [
     base,
-    localhost,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+    localhost
   ],
   transports,
   ssr: true, // If your dApp uses server side rendering (SSR)

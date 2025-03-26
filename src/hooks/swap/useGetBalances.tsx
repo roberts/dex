@@ -22,6 +22,8 @@ const useGetBalances = () => {
       const getBalances = async () => {
         let localList = await Promise.all(
           baseAssets.map(async (token: Token) => {
+            token.balance = '0';
+            return token;
             return await getBalance(wagmiConfig, {
               address: address!,
               token: token.address,

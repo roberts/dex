@@ -80,7 +80,7 @@ export default function Home() {
   }, [address, isConnected]);
   
   const onSwapClick = async () => {
-    // try {
+    try {
         //* 1st step: check allowance
         if(inputAsset?.address === undefined || outputAsset?.address === undefined) {
           generateToast("Invalid tokens", "Please select in & out tokens", 'error');
@@ -106,20 +106,17 @@ export default function Home() {
         // ).toBigInt();
         const minAmountOutBigInt = 0;
 
-
         const deadline = BigInt(
           getUnixTime(add(Date.now(), { seconds: Number(100) }))
         );
 
-        console.log(inputAsset);
-        console.log(outputAsset);
         const rawRoutes: {
           from: `0x${string}`;
           to: `0x${string}`;
           stable: boolean;
         }[] = [{
-          from: inputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!,
-          to: outputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : outputAsset?.address!,
+          from: inputAsset?.address!,
+          to: outputAsset?.address!,
           stable: false,
         }]
         // const rawRoutes = [inputAsset?.address!, outputAsset?.address!];
@@ -137,6 +134,7 @@ export default function Home() {
         ) {
           console.log("Mike 7", rawRoutes);   
           console.log("Mike 7", address);   
+          console.log("Mike 7", minAmountOutBigInt);   
           // const { request } = 
           await writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
             ///@ts-expect-error
@@ -180,17 +178,15 @@ export default function Home() {
           // await callContractWait(request, transactionToast);
         }
       
-    // } catch (err) {
-    //   console.log(err);
-    //   generateToast(
-    //     'Swap has failed!',
-    //     'Please try again later, if the problem persists contact support.',
-    //     'error'
-    //   );
-    //   // updateAssets();
-    // }
-
-    alert("swap done");    
+    } catch (err) {
+      console.log(err);
+      generateToast(
+        'Swap has failed!',
+        'Please try again later, if the problem persists contact support.',
+        'error'
+      );
+      // updateAssets();
+    }
   }
 
   const checkAllowanceAndApprove = async (routerAddress: `0x${string}`) => {
