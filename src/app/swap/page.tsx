@@ -115,8 +115,8 @@ export default function Home() {
           to: `0x${string}`;
           stable: boolean;
         }[] = [{
-          from: inputAsset?.address!,
-          to: outputAsset?.address!,
+          from: inputAsset?.address === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!,
+          to: outputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : outputAsset?.address!,
           stable: false,
         }]
         // const rawRoutes = [inputAsset?.address!, outputAsset?.address!];
@@ -136,12 +136,12 @@ export default function Home() {
           console.log("Mike 7", address);   
           console.log("Mike 7", minAmountOutBigInt);   
           // const { request } = 
-          await writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
+          let result = await writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
             ///@ts-expect-error
             args: [minAmountOutBigInt, rawRoutes, address!, deadline],
             value: inAmountBigInt,
           });
-          console.log("Mike 77");   
+          console.log("Mike 77 : ", result);   
           // await callContractWait(request, transactionToast);
         } else if (
           outputAsset?.address.toLowerCase() ===
