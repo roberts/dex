@@ -25,6 +25,6 @@ export const CurrentConfig: ExampleConfig = {
   rpc: {
     local: 'http://localhost:8545',
     mainnet: '',
-    base: wagmiConfig.chains[2].rpcUrls.default.http[0]
+    base: wagmiConfig.chains[0].rpcUrls.default.http[0]
   },
 }
