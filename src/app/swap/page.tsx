@@ -82,6 +82,10 @@ export default function Home() {
   const onSwapClick = async () => {
     // try {
         //* 1st step: check allowance
+        if(inputAsset?.address === undefined || outputAsset?.address === undefined) {
+          generateToast("Invalid tokens", "Please select in & out tokens", 'error');
+          return;
+        }
         const allowance = await checkAllowanceAndApprove(
           CONTRACTS.ROUTER_ADDRESS
         );
@@ -106,13 +110,16 @@ export default function Home() {
         const deadline = BigInt(
           getUnixTime(add(Date.now(), { seconds: Number(100) }))
         );
+
+        console.log(inputAsset);
+        console.log(outputAsset);
         const rawRoutes: {
           from: `0x${string}`;
           to: `0x${string}`;
           stable: boolean;
         }[] = [{
           from: inputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!,
-          to: inputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!,
+          to: outputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : outputAsset?.address!,
           stable: false,
         }]
         // const rawRoutes = [inputAsset?.address!, outputAsset?.address!];
