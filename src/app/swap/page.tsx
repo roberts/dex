@@ -15,9 +15,11 @@ import {
   // prepareWriteWrappedKava,
   readErc20,
   simulateRouterSwapExactEthForTokensSupportingFeeOnTransferTokens,
+  simulateRouterSwapExactTokensForEthSupportingFeeOnTransferTokens,
   simulateRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens,
   simulateErc20Approve,
   writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens,
+  writeRouterSwapExactTokensForEthSupportingFeeOnTransferTokens,
   writeRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens,
   writeErc20Approve,
   // writeWrappedKava,
@@ -110,7 +112,7 @@ export default function Home() {
           stable: boolean;
         }[] = [{
           from: inputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!,
-          to: outputAsset?.address!,
+          to: inputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!,
           stable: false,
         }]
         // const rawRoutes = [inputAsset?.address!, outputAsset?.address!];
@@ -142,13 +144,13 @@ export default function Home() {
         ) {
           console.log("Mike 8");   
           // const { request } = 
-          await writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
+          await writeRouterSwapExactTokensForEthSupportingFeeOnTransferTokens(wagmiConfig, {
             args: [
+              //@ts-ignore
               inAmountBigInt,
-              //@ts-expect-error
+              //@ts-ignore
               minAmountOutBigInt,
-              rawRoutes[0].to,
-              //@ts-expect-error
+              rawRoutes,
               address!,
               deadline,
             ],
@@ -159,13 +161,13 @@ export default function Home() {
           // const { request } = 
           await writeRouterSwapExactTokensForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
             args: [
-              //@ts-ignore
-              inAmountBigInt,
-              //@ts-ignore
-              minAmountOutBigInt,
-              rawRoutes,
-              address!,
-              deadline,
+                //@ts-ignore
+                inAmountBigInt,
+                //@ts-ignore
+                minAmountOutBigInt,
+                rawRoutes,
+                address!,
+                deadline,
             ],
           });
           // await callContractWait(request, transactionToast);
