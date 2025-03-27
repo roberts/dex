@@ -44,10 +44,10 @@ const TokenSelector = ({ children, type }: TokenSelectorProps) => {
     onClose();
   };
   const onSearchChanged = async (event: any) => {
-    // setSearch(event.target.value);
+    setSearch(event.target.value);
   };
   useEffect(() => {
-    // setSearch('');
+    setSearch('');
   }, [isOpen]);
 
   return (
