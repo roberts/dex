@@ -101,13 +101,11 @@ export default function Home() {
     clearTimeout(timer);
     const newTimer = setTimeout(() => {
       inputBalance === '' || 0 ? cleanRoute() : getSwapQuote();
-      console.log("Mike swapQuote 1 : ", swapQuote);
     }, 300);
     setTimer(newTimer);
   };
   //* For reflecting the output balance
   useEffect(() => {
-    console.log("Mike swapQuote 2 : ", swapQuote);
     if (swapQuote?.outAmount) {
       setOutputBalance(swapQuote?.outAmount);
     } else {
@@ -161,23 +159,17 @@ export default function Home() {
           inputAsset?.address.toLowerCase() ===
           CONTRACTS.ETH_ADDRESS.toLowerCase()
         ) {
-          console.log("Mike 7", rawRoutes);   
-          console.log("Mike 7", address);   
-          console.log("Mike 7", minAmountOutBigInt);   
-          console.log("Mike 7", deadline);  
           // const { request } = 
           let result = await writeRouterSwapExactEthForTokensSupportingFeeOnTransferTokens(wagmiConfig, {
             ///@ts-expect-error
             args: [minAmountOutBigInt, rawRoutes, address!, deadline],
             value: inAmountBigInt,
           });
-          console.log("Mike 77 : ", result);   
           // await callContractWait(request, transactionToast);
         } else if (
           outputAsset?.address.toLowerCase() ===
           CONTRACTS.ETH_ADDRESS.toLowerCase()
         ) {
-          console.log("Mike 8");   
           // const { request } = 
           await writeRouterSwapExactTokensForEthSupportingFeeOnTransferTokens(wagmiConfig, {
             args: [

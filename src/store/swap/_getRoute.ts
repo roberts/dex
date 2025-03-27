@@ -45,8 +45,6 @@ const _internalRouting = async () => {
       const { getBaseAsset } = useBaseAssetStore.getState().actions;
       const { pairs } = usePairStore.getState();
 
-      console.log("Mike inputAsset : ", inputAsset);
-      console.log("Mike outputAsset : ", outputAsset);
       // If we swap from WETH to ETH or ETH to WETH
       if (isWETHSwap(inputAsset as Token, outputAsset as Token)) {
         return quoteForWETH(
@@ -58,34 +56,24 @@ const _internalRouting = async () => {
       let inputAux = inputAsset as Token;
       let outputAux = outputAsset as Token;
 
-      console.log("Mike inputAux : ", inputAux.address);
-      console.log("Mike outputAux : ", outputAux.address);
-      console.log("Mike CONTRACTS.ETH_ADDRESS : ", CONTRACTS.ETH_ADDRESS);
-      console.log("Mike CONTRACTS.WETH_ADDRESS : ", CONTRACTS.WETH_ADDRESS);
       // Check if routing is from ETH in order to use WETH
       if (inputAux.address === CONTRACTS.ETH_ADDRESS) {
-        console.log("Mike CONTRACTS.ETH_ADDRESS : ", CONTRACTS.ETH_ADDRESS);
         inputAux = getBaseAsset(CONTRACTS.WETH_ADDRESS) as Token;
       } else if (outputAux.address === CONTRACTS.ETH_ADDRESS) {
-        console.log("Mike CONTRACTS.WETH_ADDRESS : ", CONTRACTS.WETH_ADDRESS);
         outputAux = getBaseAsset(CONTRACTS.WETH_ADDRESS) as Token;
       }
-      console.log("Mike pairs : ", pairs);
       const routes: Route[] = discoverRoutesForTokens(
         pairs,
         inputAux,
         outputAux
       );
-      console.log("Mike 1 : ");
 
       const from = inputAsset as Token;
       const to = outputAsset as Token;
       const inAmount = amountRaw;
-      console.log("Mike 2 : ", amountRaw);
       const { route, outAmount, } =
         await _calcBestAmountOutAndPriceImpact(inAmount, routes);
 
-      console.log("Mike 3 : ");
       const swapQuote: SwapQuote = {
         from: from,
         to: to,
@@ -95,7 +83,6 @@ const _internalRouting = async () => {
         type: 'internal',
       };
 
-      console.log("Mike 4 swapQuote: ", swapQuote);
       return swapQuote;
     }
   } catch (error) {
@@ -113,9 +100,6 @@ const discoverRoutesForTokens = (pairs: Pair[], from: Token, to: Token) => {
   const paths: Array<Array<Pair>> = [];
   // TODO: MOVE TO ENV
   const ROUTE_MAX_LENGTH = 3;
-  console.log("Mike 11 : from : ", from);
-  console.log("Mike 11 : to : ", to);
-  console.log("Mike 11 : ", ROUTE_MAX_LENGTH);
   _computeRoutesForToken(
     from.address,
     to.address,
@@ -127,7 +111,6 @@ const discoverRoutesForTokens = (pairs: Pair[], from: Token, to: Token) => {
   const routes: Route[] = [];
   let fromAsset: Token, toAsset: Token, subRoutes: SubRoute[];
 
-  console.log("Mike 12 : ");
   for (let path of paths) {
     fromAsset = from;
     subRoutes = [];
@@ -147,7 +130,6 @@ const discoverRoutesForTokens = (pairs: Pair[], from: Token, to: Token) => {
     }
     routes.push({ percentage: 100, subRoutes: subRoutes });
   }
-  console.log("Mike 13 : routes : ", routes);
   return routes;
 };
 // Searches all possible routes given from and to tokens (internal routing)
@@ -159,9 +141,7 @@ const _computeRoutesForToken = (
     currentPath: Array<Pair>,
     allPaths: Array<Array<Pair>>
   ) => {
-    console.log("Mike 111 : ");
     for (let pair of pairs) {
-      console.log("Mike 111 _1 : ");
       if (
         currentPath.indexOf(pair) !== -1 ||
         !(
@@ -174,13 +154,11 @@ const _computeRoutesForToken = (
       )
         continue;
   
-        console.log("Mike 111 _2 : ");
       const newFromAddress =
         pair.token0.address === fromAddress
           ? pair.token1.address
           : pair.token0.address;
   
-          console.log("Mike 111 _3 : ");
       if (newFromAddress === toAddress) {
         allPaths.push([...currentPath, pair]);
       } else if (maxLength > 1) {
@@ -308,7 +286,6 @@ const _getRoute = async () => {
   const { amountRaw } =
     useSwapStore.getState();
 
-  console.log("Mike amountRaw : ", amountRaw);
   if (Number(amountRaw) > 0) {
     return await _internalRouting();
   }
