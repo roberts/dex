@@ -1,11 +1,9 @@
 import { CONTRACTS } from '@/config';
 import { Token } from '@/interfaces';
-import { mapToken } from '@/utils/interfaceMaps';
-import axios from 'axios';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { fetchTokenData, fetchAggregatedTokenData } from '@/utils/fetchData';
+import { fetchAggregatedTokenData } from '@/utils/fetchData';
 
 interface BaseAssetState {
   baseAssets: Token[];
@@ -24,7 +22,6 @@ export const useBaseAssetStore = create<BaseAssetState>()(
     isLoading: false,
     actions: {
       initBaseAssets: async () => {
-        console.log(process.env.NEXT_PUBLIC_UNISWAP_BASE_SUBGRAPH_URL);
         set({ isLoading: true });
         await fetchAggregatedTokenData()
           .then(result => {

@@ -1,19 +1,30 @@
 import gql from 'graphql-tag'
 
 export const GET_PAIRS = gql`
-  query {
-    pairs {
+{
+  pairs {
+    id
+    reserve0
+    reserve1
+    reserveUSD
+    trackedReserveETH
+    totalSupply
+    txCount
+    untrackedVolumeUSD
+    token0 {
       id
-      token0 {
-        symbol
-      }
-      token1 {
-        symbol
-      }
-      reserve0
-      reserve1
+      symbol
+      name
+      decimals
+    }
+    token1 {
+      id
+      symbol
+      name
+      decimals
     }
   }
+}
 `;
 
 export const GET_TOKENS = gql`

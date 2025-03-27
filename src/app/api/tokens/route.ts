@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const result = await fetchTokenData();
 
     let baseAssets = result?.data.tokens;
-    // baseAssets.add(CONTRACTS.COIN_ADDRESS);
+    // baseAssets.add(CONTRACTS.ETH_ADDRESS);
 
     baseAssets = mapToken(baseAssets);
     baseAssets.unshift(
@@ -25,10 +25,22 @@ export async function POST(req: Request) {
     );
     baseAssets.unshift(
       {
-        address: CONTRACTS.COIN_ADDRESS,
-        decimals: CONTRACTS.COIN_DECIMALS,
-        name: CONTRACTS.COIN_NAME,
-        symbol: CONTRACTS.COIN_SYMBOL,
+        address: CONTRACTS.WETH_ADDRESS,
+        decimals: CONTRACTS.ETH_DECIMALS,
+        name: CONTRACTS.WETH_NAME,
+        symbol: CONTRACTS.WETH_SYMBOL,
+        stable: false,
+        price: 0,
+        liquidStakedAddress: "",
+        balance: 0.0,
+      }
+    );
+    baseAssets.unshift(
+      {
+        address: CONTRACTS.ETH_ADDRESS,
+        decimals: CONTRACTS.ETH_DECIMALS,
+        name: CONTRACTS.ETH_NAME,
+        symbol: CONTRACTS.ETH_SYMBOL,
         stable: false,
         price: 0,
         liquidStakedAddress: "",

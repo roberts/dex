@@ -1,16 +1,16 @@
 import { CONTRACTS } from '@/config';
-import { Token } from '@/interfaces';
+import { SwapQuote, Token } from '@/interfaces';
 import { useBaseAssetStore } from '@/store/baseAssetsStore';
 import { getBalance, getAccount } from 'wagmi/actions';
-import { mainnet } from 'wagmi/chains';  // Or another chain if needed
 import { create } from 'zustand';
-import { readUniFactory } from '@/lib/swamp';
 import { wagmiConfig } from '@/config/wagmiConfig'
+import _getRoute from './_getRoute';
 
 interface SwapState {
   inputAsset?: Token;
   outputAsset?: Token;
   displayRoute: boolean;
+  swapQuote?: SwapQuote;
   amountRaw: string;
   slippage: string;
   txDeadline: string;
@@ -24,7 +24,7 @@ interface SwapState {
     setSlippage: (slippage: string) => void;
     setTxDeadline: (txDeadline: string) => void;
     getSwapQuote: () => void;
-    // cleanRoute: () => void;
+    cleanRoute: () => void;
     changeDisplayRoute: (value: boolean) => void;
     setPriceImpact: (value: string) => void;
   };
@@ -44,7 +44,7 @@ export const useSwapStore = create<SwapState>((set, get) => ({
     initAssets: async () => {
       console.log("initAssets");
       const { getBaseAsset } = useBaseAssetStore.getState().actions;
-      const inputAsset = getBaseAsset(CONTRACTS.COIN_ADDRESS);
+      const inputAsset = getBaseAsset(CONTRACTS.ETH_ADDRESS);
       const outputAsset = getBaseAsset(CONTRACTS.GOV_TOKEN_ADDRESS);
       const { address } = getAccount(wagmiConfig);
       if (address) {
@@ -73,7 +73,7 @@ export const useSwapStore = create<SwapState>((set, get) => ({
         if (inputAsset) {
           if (
             inputAsset.address.toLowerCase() ===
-            CONTRACTS.COIN_ADDRESS.toLowerCase()
+            CONTRACTS.ETH_ADDRESS.toLowerCase()
           ) {
             inputAsset.balance = (
               await getBalance(wagmiConfig, { address: address })
@@ -100,7 +100,7 @@ export const useSwapStore = create<SwapState>((set, get) => ({
         if (outputAsset) {
           if (
             outputAsset.address.toLowerCase() ===
-            CONTRACTS.COIN_ADDRESS.toLowerCase()
+            CONTRACTS.ETH_ADDRESS.toLowerCase()
           ) {
             outputAsset.balance = (
               await getBalance(wagmiConfig, { address: address })
@@ -153,11 +153,11 @@ export const useSwapStore = create<SwapState>((set, get) => ({
     setTxDeadline: (txDeadline: string) => set({ txDeadline }),
     getSwapQuote: async () => {
       set({ isFetching: true });
-      // const swapQuote = await _getRoute();
-      // set({ swapQuote: swapQuote });
+      const swapQuote = await _getRoute();
+      set({ swapQuote: swapQuote });
       set({ isFetching: false });
     },
-    // cleanRoute: () => set({ swapQuote: {} }),
+    cleanRoute: () => set({ swapQuote: {} }),
     changeDisplayRoute: (value: boolean) => set({ displayRoute: value }),
 
     setPriceImpact: (value: string) => set({ priceImpact: value }),

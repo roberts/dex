@@ -6,6 +6,7 @@ import Navbar from '@/layout/navbar';
 import Sidebar from '@/layout/sidebar';
 import { useBaseAssetStore } from '@/store/baseAssetsStore';
 import { shallow } from 'zustand/shallow';
+import { usePairStore } from '@/store/pairsStore';
 
 export default function Layout({ children }: PropsWithChildren) {
 
@@ -17,8 +18,15 @@ export default function Layout({ children }: PropsWithChildren) {
     }),
     shallow
   );
+  const { initPairs } = usePairStore(
+    state => ({
+      initPairs: state.actions.initPairs
+    }),
+    shallow
+  );
   useEffect(() => {
     initBaseAssets();
+    initPairs();
   }, []);
 
   return (

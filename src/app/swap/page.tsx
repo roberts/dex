@@ -53,15 +53,27 @@ import { shallow } from 'zustand/shallow';
 export default function Home() {
   const { address, status, isConnected } = useAccount();
   const [inputBalance, setInputBalance] = useState('');
-  const {
-    inputAsset,
-    outputAsset,
-  } = useSwapStore(
+  const [outputBalance, setOutputBalance] = useState('');
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
+  // const {
+  //   inputAsset,
+  //   outputAsset,
+  // } = useSwapStore(
+  //   state => ({
+  //     inputAsset: state.inputAsset,
+  //     outputAsset: state.outputAsset,
+  //   }),
+  //   shallow
+  // );
+  const { inputAsset, outputAsset, setAmountRaw, getSwapQuote, cleanRoute, swapQuote } = useSwapStore(
     state => ({
       inputAsset: state.inputAsset,
       outputAsset: state.outputAsset,
-    }),
-    shallow
+      setAmountRaw: state.actions.setAmountRaw,
+      getSwapQuote: state.actions.getSwapQuote,
+      cleanRoute: state.actions.cleanRoute,
+      swapQuote: state.swapQuote,
+    })
   );
 
   const {
@@ -72,12 +84,36 @@ export default function Home() {
     }),
     shallow
   );
-  const handleChange = (valueAsString: string, valueAsNumber: number) => {
-    setInputBalance(valueAsString);
-  };
   useEffect(() => {
     initAssets();
   }, [address, isConnected]);
+
+  const handleChange = (valueAsString: string, valueAsNumber: number) => {
+    setInputBalance(valueAsString); 
+    setAmountRaw(valueAsNumber === 0 ? '0' : valueAsString);
+  };
+
+  //* When change token
+  useEffect(() => {
+    startQuoting();
+  }, [inputAsset, outputAsset, inputBalance]); 
+  const startQuoting = () => {
+    clearTimeout(timer);
+    const newTimer = setTimeout(() => {
+      inputBalance === '' || 0 ? cleanRoute() : getSwapQuote();
+      console.log("Mike swapQuote 1 : ", swapQuote);
+    }, 300);
+    setTimer(newTimer);
+  };
+  //* For reflecting the output balance
+  useEffect(() => {
+    console.log("Mike swapQuote 2 : ", swapQuote);
+    if (swapQuote?.outAmount) {
+      setOutputBalance(swapQuote?.outAmount);
+    } else {
+      setOutputBalance('');
+    }
+  }, [swapQuote?.outAmount, swapQuote?.to]);
   
   const onSwapClick = async () => {
     try {
@@ -110,8 +146,8 @@ export default function Home() {
           getUnixTime(add(Date.now(), { seconds: Number(100) }))
         );
 
-        const rawRoutes = [inputAsset?.address === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!, 
-          outputAsset?.address! === CONTRACTS.COIN_ADDRESS ? CONTRACTS.WETH_ADDRESS : outputAsset?.address!];
+        const rawRoutes = [inputAsset?.address === CONTRACTS.ETH_ADDRESS ? CONTRACTS.WETH_ADDRESS : inputAsset?.address!, 
+          outputAsset?.address! === CONTRACTS.ETH_ADDRESS ? CONTRACTS.WETH_ADDRESS : outputAsset?.address!];
         // const rawRoutes = [inputAsset?.address!, outputAsset?.address!];
 
         const transactionToast: TransactionText = {
@@ -123,7 +159,7 @@ export default function Home() {
 
         if (
           inputAsset?.address.toLowerCase() ===
-          CONTRACTS.COIN_ADDRESS.toLowerCase()
+          CONTRACTS.ETH_ADDRESS.toLowerCase()
         ) {
           console.log("Mike 7", rawRoutes);   
           console.log("Mike 7", address);   
@@ -139,7 +175,7 @@ export default function Home() {
           // await callContractWait(request, transactionToast);
         } else if (
           outputAsset?.address.toLowerCase() ===
-          CONTRACTS.COIN_ADDRESS.toLowerCase()
+          CONTRACTS.ETH_ADDRESS.toLowerCase()
         ) {
           console.log("Mike 8");   
           // const { request } = 
@@ -185,7 +221,7 @@ export default function Home() {
 
   const checkAllowanceAndApprove = async (routerAddress: `0x${string}`) => {
     if (
-      inputAsset?.address.toLowerCase() !== CONTRACTS.COIN_ADDRESS.toLowerCase()
+      inputAsset?.address.toLowerCase() !== CONTRACTS.ETH_ADDRESS.toLowerCase()
     ) {
       let allowance: bigint | BigNumber = await readErc20(wagmiConfig, {
         address: inputAsset?.address!,
@@ -297,7 +333,7 @@ export default function Home() {
               </Box>
               <Box className='flex justify-between'>                  
                 <Box fontSize={'1.75rem'} className={'text-gray-400'}>
-                  0
+                  {swapQuote?.outAmount ?? '0'}
                 </Box>
                 <TokenSelector type={"output"}>
                   <Button

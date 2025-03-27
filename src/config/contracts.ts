@@ -21,10 +21,13 @@ import {
   export const ROUTER_ABI = routerABI;
   
   export const WETH_ADDRESS = '0x4200000000000000000000000000000000000006';
-  export const COIN_ADDRESS = '0x4200000000000000000000000000000000000006';
-  export const COIN_DECIMALS = 18;
-  export const COIN_NAME = "ether";
-  export const COIN_SYMBOL = "ETH";
+  export const WETH_NAME = "Wrapped ETH";
+  export const WETH_SYMBOL = "WETH";
+
+  export const ETH_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
+  export const ETH_DECIMALS = 18;
+  export const ETH_NAME = "ether";
+  export const ETH_SYMBOL = "ETH";
   
 
   export const MULTICALL_ADDRESS = '0x091e99cb1C49331a94dD62755D168E941AbD0693';
